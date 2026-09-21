@@ -1,0 +1,69 @@
+# =============================================================================
+#  Docker Compose: СУБД (postgres:18 + ru_RU.UTF-8) и приложение в ОДНОЙ сети.
+#  Параметры подключения приложения передаются параметром env_file
+#  (см. пункт 6.8 задания) — путь до Env-файла указывается в compose.
+#
+#  Запуск:
+#      docker compose up -d db                      # только БД
+#      docker compose run --rm app                   # интерактивное приложение
+#      docker compose run --rm app python -c "..."   # разовые команды
+# =============================================================================
+services:
+  db:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.db
+    image: postgres18_ru:latest
+    container_name: crud_db
+    restart: unless-stopped
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    env_file:
+      - ./crud.env
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: app_admin
+      POSTGRES_PASSWORD: adminsecret
+      LANG: ru_RU.UTF-8
+      LC_ALL: ru_RU.UTF-8
+      LC_CTYPE: ru_RU.UTF-8
+    ports:
+      - "5432:5432"
+    volumes:
+      # В postgres:18 данные кластера лежат в /var/lib/postgresql/18/docker,
+      # поэтому монтируется КАТАЛОГ /var/lib/postgresql, а не .../data.
+      - pgdata:/var/lib/postgresql
+      - ./docker/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/00_init.sql:ro
+      - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./sql/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_admin -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Приложение: тот же образ, та же сеть Docker, что и СУБД.
+  # Интерактивный режим — stdin/stdout/tty.
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crud-app:0.3.0
+    container_name: crud_app
+    env_file:
+      - ./crud.env
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+    volumes:
+      - ./logs:/opt/app/logs
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+    networks:
+      - default
+
+volumes:
+  pgdata:
