@@ -1,0 +1,2880 @@
+{
+ "summary": {
+  "title": "CRUD-приложение «склад интернет-магазина» — модель угроз",
+  "owner": "Anya",
+  "description": "Задание №4: DFD и локализованные угрозы STRIDE для приложения из задания №3 (postgres-crud-app). Оценка рисков по методике DREAD."
+ },
+ "detail": {
+  "contributors": [
+   {
+    "name": "Anya"
+   }
+  ],
+  "reviewer": "Преподаватель",
+  "diagrams": [
+   {
+    "version": "2.3.0",
+    "title": "DFD — CRUD app (STRIDE)",
+    "description": "Контекстная и нулевая диаграмма потоков данных уровня контейнеров Docker.",
+    "thumbnail": "",
+    "diagramType": "STRIDE",
+    "id": 0,
+    "cells": [
+     {
+      "id": "4625469d-31ee-579a-ba6a-8e18237f7ca2",
+      "shape": "trust-boundary-curve",
+      "attrs": {
+       "line": {
+        "targetMarker": "",
+        "sourceMarker": ""
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "Хост-система: Docker daemon, docker compose, каталог проекта",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         },
+         "text": {
+          "text": "Хост-система: Docker daemon, docker compose, каталог проекта"
+         }
+        },
+        "position": {
+         "distance": 0.5,
+         "args": {
+          "keepGradient": true,
+          "ensureLegibility": true
+         }
+        }
+       }
+      ],
+      "connector": "smooth",
+      "data": {
+       "type": "tm.Boundary",
+       "name": "Хост-система: Docker daemon, docker compose, каталог проекта",
+       "description": "",
+       "isTrustBoundary": true,
+       "hasOpenThreats": false
+      },
+      "source": {
+       "x": 490,
+       "y": 90
+      },
+      "target": {
+       "x": 1830,
+       "y": 1100
+      },
+      "vertices": [
+       {
+        "x": 1830,
+        "y": 90
+       },
+       {
+        "x": 490,
+        "y": 1100
+       }
+      ]
+     },
+     {
+      "id": "7b57f417-ef60-50e5-bc15-bec4374972e2",
+      "shape": "trust-boundary-curve",
+      "attrs": {
+       "line": {
+        "targetMarker": "",
+        "sourceMarker": ""
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "Контейнер приложения crud_app (образ crud-app:0.3.0)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         },
+         "text": {
+          "text": "Контейнер приложения crud_app (образ crud-app:0.3.0)"
+         }
+        },
+        "position": {
+         "distance": 0.5,
+         "args": {
+          "keepGradient": true,
+          "ensureLegibility": true
+         }
+        }
+       }
+      ],
+      "connector": "smooth",
+      "data": {
+       "type": "tm.Boundary",
+       "name": "Контейнер приложения crud_app (образ crud-app:0.3.0)",
+       "description": "",
+       "isTrustBoundary": true,
+       "hasOpenThreats": false
+      },
+      "source": {
+       "x": 520,
+       "y": 130
+      },
+      "target": {
+       "x": 1050,
+       "y": 940
+      },
+      "vertices": [
+       {
+        "x": 1050,
+        "y": 130
+       },
+       {
+        "x": 520,
+        "y": 940
+       }
+      ]
+     },
+     {
+      "id": "ee875746-9252-5e6b-8079-79b6e571f3d2",
+      "shape": "trust-boundary-curve",
+      "attrs": {
+       "line": {
+        "targetMarker": "",
+        "sourceMarker": ""
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "Контейнер СУБД crud_db (образ postgres18_ru)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         },
+         "text": {
+          "text": "Контейнер СУБД crud_db (образ postgres18_ru)"
+         }
+        },
+        "position": {
+         "distance": 0.5,
+         "args": {
+          "keepGradient": true,
+          "ensureLegibility": true
+         }
+        }
+       }
+      ],
+      "connector": "smooth",
+      "data": {
+       "type": "tm.Boundary",
+       "name": "Контейнер СУБД crud_db (образ postgres18_ru)",
+       "description": "",
+       "isTrustBoundary": true,
+       "hasOpenThreats": false
+      },
+      "source": {
+       "x": 1090,
+       "y": 130
+      },
+      "target": {
+       "x": 1550,
+       "y": 940
+      },
+      "vertices": [
+       {
+        "x": 1550,
+        "y": 130
+       },
+       {
+        "x": 1090,
+        "y": 940
+       }
+      ]
+     },
+     {
+      "id": "cebeda27-0965-5e2b-8036-a0329401e5bb",
+      "shape": "trust-boundary-curve",
+      "attrs": {
+       "line": {
+        "targetMarker": "",
+        "sourceMarker": ""
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "Рабочая станция: пользователь и нарушитель",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         },
+         "text": {
+          "text": "Рабочая станция: пользователь и нарушитель"
+         }
+        },
+        "position": {
+         "distance": 0.5,
+         "args": {
+          "keepGradient": true,
+          "ensureLegibility": true
+         }
+        }
+       }
+      ],
+      "connector": "smooth",
+      "data": {
+       "type": "tm.Boundary",
+       "name": "Рабочая станция: пользователь и нарушитель",
+       "description": "",
+       "isTrustBoundary": true,
+       "hasOpenThreats": false
+      },
+      "source": {
+       "x": 60,
+       "y": 150
+      },
+      "target": {
+       "x": 440,
+       "y": 650
+      },
+      "vertices": [
+       {
+        "x": 440,
+        "y": 150
+       },
+       {
+        "x": 60,
+        "y": 650
+       }
+      ]
+     },
+     {
+      "id": "d1d24bd2-44e7-54ce-a8b5-737d109267a8",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "1. Учётные данные\n(PGUSER/PGPASSWORD)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "d376f9c4-9e0b-5e81-9ae0-d9cc096a0ac9"
+      },
+      "target": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "1. Учётные данные\n(PGUSER/PGPASSWORD)",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "435bf0fa-b0dc-566c-b7ed-938c99535055",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "2. Выбор таблицы/колонок,\nзначения фильтров, UPDATE/INSERT",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "d376f9c4-9e0b-5e81-9ae0-d9cc096a0ac9"
+      },
+      "target": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "2. Выбор таблицы/колонок,\nзначения фильтров, UPDATE/INSERT",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "a2f6232b-912b-5319-ab06-3e0ea3a0dc85",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "3. Некорректные значения,\nSQL-метасимволы, попытки инъекций",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "362a78e4-a901-5565-b563-7390f7249023"
+      },
+      "target": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "3. Некорректные значения,\nSQL-метасимволы, попытки инъекций",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "4fcfd336-de2a-5672-99f7-af264e27ff67",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "4. Прямое подключение к порту 5432\n(обход приложения)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "362a78e4-a901-5565-b563-7390f7249023"
+      },
+      "target": {
+       "cell": "b713f268-731d-5965-b3b3-dc93c28b652d"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "4. Прямое подключение к порту 5432\n(обход приложения)",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "13ba3219-fdfa-5c1a-9627-717cf8458544",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "5. Имена колонок и значения\nдля сборки запроса",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "target": {
+       "cell": "91ef2b4b-243e-51ba-b2b6-ddce89f7c664"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "5. Имена колонок и значения\nдля сборки запроса",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "116671a7-a8cc-59ee-9554-223e4e510524",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "6. Готовый параметризованный\nзапрос (sql.Composable)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "91ef2b4b-243e-51ba-b2b6-ddce89f7c664"
+      },
+      "target": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "6. Готовый параметризованный\nзапрос (sql.Composable)",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "ceff289c-fdfa-5571-a9d3-35ac6b01500e",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "7. Запрос на подключение /\nполучение метаданных",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "target": {
+       "cell": "2ace94c9-e9aa-5ad0-bc12-8e453438b40c"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "7. Запрос на подключение /\nполучение метаданных",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "781278d6-71f3-5223-ad35-ae21fbad6ab8",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "8. SQL-запросы CRUD\nпротокол PostgreSQL",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2ace94c9-e9aa-5ad0-bc12-8e453438b40c"
+      },
+      "target": {
+       "cell": "b713f268-731d-5965-b3b3-dc93c28b652d"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "8. SQL-запросы CRUD\nпротокол PostgreSQL",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "89dc88c8-f9f8-5ecc-b729-9f10cee3b2b4",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "9. Результаты выборки,\nкоды ошибок, SQLSTATE",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "b713f268-731d-5965-b3b3-dc93c28b652d"
+      },
+      "target": {
+       "cell": "2ace94c9-e9aa-5ad0-bc12-8e453438b40c"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "9. Результаты выборки,\nкоды ошибок, SQLSTATE",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "a0a506ff-34bb-58d5-9f3c-b8b4a91cdd02",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "10. Заголовки и строки\nтаблиц",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2ace94c9-e9aa-5ad0-bc12-8e453438b40c"
+      },
+      "target": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "10. Заголовки и строки\nтаблиц",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "b07a0d62-b321-5d25-8df0-3614218722f1",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "11. Сообщение пользователю /\nзапись журнала",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "target": {
+       "cell": "88857b63-8f4c-5166-a9fd-d15b7e6518c6"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "11. Сообщение пользователю /\nзапись журнала",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "1fc6bbfa-3271-5c93-9015-8831f9e6a5fc",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "12. «Сырой» журнал:\nSQL, трассировка",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "88857b63-8f4c-5166-a9fd-d15b7e6518c6"
+      },
+      "target": {
+       "cell": "375810cd-796e-53f1-85ea-6ce6c0b90bd8"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "12. «Сырой» журнал:\nSQL, трассировка",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "c2b35f83-0fb9-5b41-960c-853ddf75f40b",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "13. Чтение/запись строк\n4 таблиц",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "fa2542ff-9ebc-5474-894a-dfe3b6836db4"
+      },
+      "target": {
+       "cell": "b713f268-731d-5965-b3b3-dc93c28b652d"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "13. Чтение/запись строк\n4 таблиц",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "12dc5865-aa0d-5ad2-b492-bb912c1a28e1",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "14. Чтение PGUSER/PGPASSWORD,\nAPP_LOG_FILE, APP_CONFIG",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "target": {
+       "cell": "2655ca04-08f2-57ec-9342-e577a1f41af7"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "14. Чтение PGUSER/PGPASSWORD,\nAPP_LOG_FILE, APP_CONFIG",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "b0e07f31-988e-5ecd-b6d4-506342982434",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "15. Чтение параметров\nподключения",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "2bc0d324-9852-5e19-b058-ed361984e550"
+      },
+      "target": {
+       "cell": "b2c730b7-06fe-5574-a6ce-79e266d8b76d"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "15. Чтение параметров\nподключения",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "6a04302d-42be-52b6-9c68-0a67dd5f8c24",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "16. Монтирование env-файла\nв контейнер",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "7930eb4f-c81d-5784-88fc-fbdf5cd3fbcc"
+      },
+      "target": {
+       "cell": "2655ca04-08f2-57ec-9342-e577a1f41af7"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "16. Монтирование env-файла\nв контейнер",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "a24fafc5-6aea-588e-8054-27145eb5e09b",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "17. Доступ к тому pgdata\n(чтение/запись файлов БД)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "7930eb4f-c81d-5784-88fc-fbdf5cd3fbcc"
+      },
+      "target": {
+       "cell": "fa2542ff-9ebc-5474-894a-dfe3b6836db4"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "17. Доступ к тому pgdata\n(чтение/запись файлов БД)",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "id": "398281c9-a993-5713-b8db-89a15e8e80bd",
+      "shape": "flow",
+      "attrs": {
+       "line": {
+        "stroke": "#0B5394",
+        "targetMarker": {
+         "name": "block"
+        },
+        "strokeDasharray": null
+       }
+      },
+      "width": 200,
+      "height": 100,
+      "zIndex": 10,
+      "labels": [
+       {
+        "markup": [
+         {
+          "tagName": "ellipse",
+          "selector": "labelBody"
+         },
+         {
+          "tagName": "text",
+          "selector": "labelText"
+         }
+        ],
+        "attrs": {
+         "labelText": {
+          "text": "18. Доступ к файлу журнала\nна хосте (том ./logs)",
+          "textAnchor": "middle",
+          "textVerticalAnchor": "middle"
+         },
+         "labelBody": {
+          "ref": "labelText",
+          "refRx": "50%",
+          "refRy": "60%",
+          "fill": "#fff",
+          "strokeWidth": 0
+         }
+        },
+        "position": 0.5
+       }
+      ],
+      "connector": "smooth",
+      "source": {
+       "cell": "362a78e4-a901-5565-b563-7390f7249023"
+      },
+      "target": {
+       "cell": "375810cd-796e-53f1-85ea-6ce6c0b90bd8"
+      },
+      "data": {
+       "type": "tm.Flow",
+       "name": "18. Доступ к файлу журнала\nна хосте (том ./logs)",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "isBidirectional": false,
+       "isEncrypted": false,
+       "isPublicNetwork": false,
+       "protocol": ""
+      }
+     },
+     {
+      "position": {
+       "x": 140,
+       "y": 230
+      },
+      "size": {
+       "width": 240,
+       "height": 100
+      },
+      "attrs": {
+       "text": {
+        "text": "Пользователь\n(оператор склада)"
+       },
+       "body": {
+        "stroke": "#6C8EBF",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "actor",
+      "zIndex": 1,
+      "id": "d376f9c4-9e0b-5e81-9ae0-d9cc096a0ac9",
+      "data": {
+       "type": "tm.Actor",
+       "name": "Пользователь\n(оператор склада)",
+       "description": "Пользователь приложения; вводит логин и пароль, выбирает таблицу и операцию через интерактивное меню.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "threats": [],
+       "isTrustBoundary": false,
+       "providesAuthentication": false
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 140,
+       "y": 460
+      },
+      "size": {
+       "width": 240,
+       "height": 100
+      },
+      "attrs": {
+       "text": {
+        "text": "Нарушитель\n(внешний/внутренний)"
+       },
+       "body": {
+        "stroke": "#6C8EBF",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "actor",
+      "zIndex": 1,
+      "id": "362a78e4-a901-5565-b563-7390f7249023",
+      "data": {
+       "type": "tm.Actor",
+       "name": "Нарушитель\n(внешний/внутренний)",
+       "description": "Нарушитель: пользователь с легальной учётной записью, действующий вне своих полномочий, либо лицо, получившее доступ к среде Docker и к каталогу проекта на хосте.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "threats": [],
+       "isTrustBoundary": false,
+       "providesAuthentication": false
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 560,
+       "y": 275
+      },
+      "size": {
+       "width": 190,
+       "height": 130
+      },
+      "attrs": {
+       "text": {
+        "text": "crud_app\nCLI-приложение\nsrc/app.py\n[T-01, T-08, T-12]"
+       },
+       "body": {
+        "stroke": "#82B366",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "process",
+      "zIndex": 1,
+      "id": "2bc0d324-9852-5e19-b058-ed361984e550",
+      "data": {
+       "type": "tm.Process",
+       "name": "crud_app\nCLI-приложение\nsrc/app.py",
+       "description": "Точка входа и REPL: меню 6.1–6.4, сбор ввода пользователя, вывод таблиц, дружелюбные сообщения об ошибках.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "210988d0-de44-5947-ac92-2c3c09c7e1f7",
+         "status": "Open",
+         "severity": "Medium",
+         "title": "T-01: Подбор или перехват учётных данных пользователя БД",
+         "type": "Spoofing",
+         "description": "Приложение получает логин и пароль от пользователя в открытом виде и передаёт их драйверу. Нарушитель может подобрать пароль роли app_user или перехватить ввод; пароль в демонстрационном env-файле хранится в открытом виде (crud.env). Оценка DREAD: 17/25.",
+         "mitigation": "Хранить пароль только в секрете (Docker secret / внешний менеджер секретов), сменить демонстрационный пароль, ограничить число попыток аутентификации.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "35d98bd8-3028-527b-81d7-f72f5e7d239e",
+         "status": "Open",
+         "severity": "Medium",
+         "title": "T-08: Отсутствие регистрации действий пользователя в разрезе учётных записей",
+         "type": "Repudiation",
+         "description": "Приложение журналирует факт подключения и запросы, но не фиксирует, какая учётная запись выполнила изменение и какие именно строки затронуты; все подключения идут под одной ролью app_user, поэтому авторство изменения доказать нельзя. Оценка DREAD: 14/25.",
+         "mitigation": "Вести аудит на стороне СУБД (pgaudit), создавать отдельные роли пользователей, включать application_name и идентификатор сессии в журнал.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "61ed0767-e844-55ad-be37-173eaf4409fa",
+         "status": "Open",
+         "severity": "Low",
+         "title": "T-12: Отказ в обслуживании из-за неконтролируемого ввода размера фильтра",
+         "type": "Denial of service",
+         "description": "Меню позволяет ввести произвольно много пар «колонка-значение» для условий IN, а также отключено ограничение number of rows в интерактивном режиме. Большой список условий приведёт к неограниченному запросу, исчерпанию памяти и отказу. Оценка DREAD: 11/25.",
+         "mitigation": "Ограничить число условий и размер выборки (LIMIT), задать statement_timeout и work_mem на уровне роли, валидировать длину ввода.",
+         "modelType": "STRIDE"
+        }
+       ]
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 820,
+       "y": 235
+      },
+      "size": {
+       "width": 210,
+       "height": 130
+      },
+      "attrs": {
+       "text": {
+        "text": "sqlsafe\nСборка SQL\n(sql.Identifier/Literal)"
+       },
+       "body": {
+        "stroke": "#82B366",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "process",
+      "zIndex": 1,
+      "id": "91ef2b4b-243e-51ba-b2b6-ddce89f7c664",
+      "data": {
+       "type": "tm.Process",
+       "name": "sqlsafe\nСборка SQL\n(sql.Identifier/Literal)",
+       "description": "Белый список колонок и операторов, параметризация значений драйвером psycopg, рендер SQL для журнала.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "threats": []
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 820,
+       "y": 425
+      },
+      "size": {
+       "width": 210,
+       "height": 120
+      },
+      "attrs": {
+       "text": {
+        "text": "Модуль db\nконфиг + подключение\n[T-10]"
+       },
+       "body": {
+        "stroke": "#82B366",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "process",
+      "zIndex": 1,
+      "id": "2ace94c9-e9aa-5ad0-bc12-8e453438b40c",
+      "data": {
+       "type": "tm.Process",
+       "name": "Модуль db\nконфиг + подключение",
+       "description": "Загрузка конфига по белому списку ключей, проверка логина, connect(user=…, password=…) отдельными аргументами.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "85113a06-7cf9-5e68-b15d-167998d17679",
+         "status": "Open",
+         "severity": "Low",
+         "title": "T-10: Перехват учётных данных и данных приложения в сети Docker",
+         "type": "Information disclosure",
+         "description": "Приложение передаёт PGUSER/PGPASSWORD и результаты выборки между контейнерами; по умолчанию sslmode=prefer, то есть при отказе сервера соединение может установиться без шифрования. Трафик в сети Docker не защищён. Оценка DREAD: 13/25.",
+         "mitigation": "Задать sslmode=verify-full и сертификаты PostgreSQL, не допускать незашифрованных подключений (hostssl в pg_hba.conf).",
+         "modelType": "STRIDE"
+        }
+       ]
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 820,
+       "y": 620
+      },
+      "size": {
+       "width": 210,
+       "height": 130
+      },
+      "attrs": {
+       "text": {
+        "text": "Модуль logger\nstdout/stderr + файл"
+       },
+       "body": {
+        "stroke": "#82B366",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "process",
+      "zIndex": 1,
+      "id": "88857b63-8f4c-5166-a9fd-d15b7e6518c6",
+      "data": {
+       "type": "tm.Process",
+       "name": "Модуль logger\nstdout/stderr + файл",
+       "description": "Дружелюбные сообщения пользователю и «сырой» технический журнал (код SQL, текст исключения, трассировка).",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "threats": []
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 1120,
+       "y": 300
+      },
+      "size": {
+       "width": 230,
+       "height": 130
+      },
+      "attrs": {
+       "text": {
+        "text": "СУБД PostgreSQL 18\nbackend-процесс\n[T-04, T-13]"
+       },
+       "body": {
+        "stroke": "#82B366",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "process",
+      "zIndex": 1,
+      "id": "b713f268-731d-5965-b3b3-dc93c28b652d",
+      "data": {
+       "type": "tm.Process",
+       "name": "СУБД PostgreSQL 18\nbackend-процесс",
+       "description": "Проверка аутентификации и прав, разбор и планирование запроса, разграничение доступа (роль app_user).",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "7a385620-21a1-5667-8e99-6da8e3678e5b",
+         "status": "Open",
+         "severity": "High",
+         "title": "T-04: SQL-инъекция через значения фильтров и INSERT/UPDATE",
+         "type": "Tampering",
+         "description": "Значения вводятся пользователем (в т.ч. «строками» для IN). При ошибке сборки запроса ввод вида «1; DROP TABLE supplier; --» или «' AND '1'='1'» мог бы изменить структуру запроса и модифицировать данные в обход прав роли. Оценка DREAD: 20/25.",
+         "mitigation": "Уже реализовано: белый список колонок и операторов, параметризация значений через psycopg sql.Literal; покрыть проверками новые ветки кода.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "affae381-7c70-5532-a9b6-cb8c3a53387c",
+         "status": "Open",
+         "severity": "Low",
+         "title": "T-13: Исчерпание соединений и ресурсов СУБД",
+         "type": "Denial of service",
+         "description": "СУБД запускается от административной роли app_admin и принимает подключения на порту, опубликованном на хост. Кто угодно может открыть множество соединений и исчерпать max_connections, заблокировав работу приложения. Оценка DREAD: 11/25.",
+         "mitigation": "Не публиковать порт 5432, задать max_connections и connection limits для роли, использовать pgbouncer.",
+         "modelType": "STRIDE"
+        }
+       ]
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 1500,
+       "y": 630
+      },
+      "size": {
+       "width": 250,
+       "height": 130
+      },
+      "attrs": {
+       "text": {
+        "text": "Docker daemon / compose\n(сеть default, тома)\n[T-02, T-14]"
+       },
+       "body": {
+        "stroke": "#82B366",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "process",
+      "zIndex": 1,
+      "id": "7930eb4f-c81d-5784-88fc-fbdf5cd3fbcc",
+      "data": {
+       "type": "tm.Process",
+       "name": "Docker daemon / compose\n(сеть default, тома)",
+       "description": "Управляет контейнерами crud_db и crud_app, их совместной сетью, env-файлом и томами (./logs, pgdata).",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "4a8a5ca5-8be8-5363-a5c7-69a54872a526",
+         "status": "Open",
+         "severity": "High",
+         "title": "T-14: Побег из контейнера и повышение привилегий до root хоста",
+         "type": "Elevation of privilege",
+         "description": "Контейнер приложения смонтирован с доступом к каталогу ./logs и работает в общем compose-проекте с СУБД; пароль администратора СУБД задан в открытом виде. При эксплуатации уязвимости образа нарушитель может получить доступ к хосту и томам pgdata. Оценка DREAD: 18/25.",
+         "mitigation": "Запускать контейнеры от непривилегированного пользователя (USER в Dockerfile), включить read_only, no-new-privileges, cap_drop: [ALL], ограничить ресурсы.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "81314498-5c10-50f5-afd2-4dbf1d4c4b27",
+         "status": "Open",
+         "severity": "Medium",
+         "title": "T-02: Олицетворение контейнера crud_app в сети Docker",
+         "type": "Spoofing",
+         "description": "В сети Docker нет взаимной аутентификации сервисов и шифрования трафика. Любой контейнер в той же сети может подключиться к СУБД на db:5432, назвавшись приложением от имени app_user. Оценка DREAD: 17/25.",
+         "mitigation": "Разделить сети (frontend/backend), не публиковать порт 5432 на хост, использовать sslmode=verify-full и сертификаты, ограничить доступ правилами Docker network.",
+         "modelType": "STRIDE"
+        }
+       ]
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 560,
+       "y": 630
+      },
+      "size": {
+       "width": 200,
+       "height": 110
+      },
+      "attrs": {
+       "text": {
+        "text": "env-файл crud.env\nPGUSER/PGPASSWORD\n[T-03]"
+       },
+       "topLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       },
+       "bottomLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "store",
+      "zIndex": 1,
+      "id": "2655ca04-08f2-57ec-9342-e577a1f41af7",
+      "data": {
+       "type": "tm.Store",
+       "name": "env-файл crud.env\nPGUSER/PGPASSWORD",
+       "description": "Учётные данные пользователя БД, путь к конфигу и к файлу журнала. Монтируется в контейнер приложения.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "f08ee465-ce76-5bda-b211-fe0071220c4e",
+         "status": "Open",
+         "severity": "High",
+         "title": "T-03: Доступ к учётным данным в env-файле crud.env",
+         "type": "Spoofing",
+         "description": "Файл crud.env содержит PGUSER=app_user и PGPASSWORD=user_secret и доступен любому, кто читает каталог проекта; пароль совпадает с паролем роли, созданной sql/01_schema.sql. Оценка DREAD: 18/25.",
+         "mitigation": "Не публиковать env-файл с реальными секретами, использовать .env.example и Docker secrets.",
+         "modelType": "STRIDE"
+        }
+       ],
+       "isALog": false,
+       "storesCredentials": true,
+       "isEncrypted": false,
+       "isSigned": false
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 560,
+       "y": 425
+      },
+      "size": {
+       "width": 200,
+       "height": 110
+      },
+      "attrs": {
+       "text": {
+        "text": "Конфиг app.docker.conf\n[host, port, dbname, sslmode]\n[T-06]"
+       },
+       "topLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       },
+       "bottomLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "store",
+      "zIndex": 1,
+      "id": "b2c730b7-06fe-5574-a6ce-79e266d8b76d",
+      "data": {
+       "type": "tm.Store",
+       "name": "Конфиг app.docker.conf\n[host, port, dbname, sslmode]",
+       "description": "Параметры подключения; читаются по строгому белому списку ключей.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "e3247acc-3a17-58b8-a5d3-1acc31d4bf36",
+         "status": "Open",
+         "severity": "High",
+         "title": "T-06: Подмена конфигурационного файла app.docker.conf",
+         "type": "Tampering",
+         "description": "Конфиг монтируется в контейнер из каталога проекта (host, port, dbname, sslmode). Подмена sslmode с verify-full на disable или host на адрес нарушителя перенаправит подключение и снимет шифрование канала. Оценка DREAD: 19/25.",
+         "mitigation": "Монтировать конфиг только для чтения (ro), проверять контрольную сумму, не разрешать sslmode=disable в продуктивной среде.",
+         "modelType": "STRIDE"
+        }
+       ],
+       "isALog": false,
+       "storesCredentials": true,
+       "isEncrypted": false,
+       "isSigned": false
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 800,
+       "y": 790
+      },
+      "size": {
+       "width": 210,
+       "height": 100
+      },
+      "attrs": {
+       "text": {
+        "text": "Журнал logs/app.log\n(том ./logs)\n[T-07, T-09]"
+       },
+       "topLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       },
+       "bottomLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "store",
+      "zIndex": 1,
+      "id": "375810cd-796e-53f1-85ea-6ce6c0b90bd8",
+      "data": {
+       "type": "tm.Store",
+       "name": "Журнал logs/app.log\n(том ./logs)",
+       "description": "Файл технического журнала, дублирующего вывод «в чистом виде»: тексты SQL, исключения, трассировки.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "6fcf46eb-00c8-5ccf-9b34-1c4d4f9ffb93",
+         "status": "Open",
+         "severity": "Medium",
+         "title": "T-07: Подмена или удаление записей технического журнала",
+         "type": "Repudiation",
+         "description": "Журнал logs/app.log лежит в каталоге проекта, примонтированном в контейнер (./logs:/opt/app/logs). Пользователь может изменить или удалить записи, скрыв собственные действия, поскольку целостность журнала не контролируется. Оценка DREAD: 16/25.",
+         "mitigation": "Передавать журнал по сети в защищённое хранилище (syslog/сборщик), вести хеш-цепочку записей, ограничить права на каталог журнала.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "f686bda9-9d42-56fd-911d-5e989c9b2878",
+         "status": "Open",
+         "severity": "Medium",
+         "title": "T-09: Утечка конфиденциальных данных через файл журнала и stderr",
+         "type": "Information disclosure",
+         "description": "APP_LOG_FILE дублирует технический журнал «в чистом виде»: тексты SQL, текст исключения и трассировку. Тексты запросов могут содержать персональные данные покупателей из таблицы \"order\", а трассировка — параметры подключения. Оценка DREAD: 15/25.",
+         "mitigation": "Маскировать значения в журнале, исключить трассировку из продуктивного режима, ограничить доступ к каталогу журналов и сроку их хранения.",
+         "modelType": "STRIDE"
+        }
+       ],
+       "isALog": true,
+       "storesCredentials": false,
+       "isEncrypted": false,
+       "isSigned": false
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 1360,
+       "y": 170
+      },
+      "size": {
+       "width": 170,
+       "height": 140
+      },
+      "attrs": {
+       "text": {
+        "text": "PostgreSQL: 4 таблицы\nsupplier, product,\n\"order\", order_item\n[T-05, T-11, T-15]"
+       },
+       "topLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       },
+       "bottomLine": {
+        "stroke": "#666666",
+        "strokeWidth": 2,
+        "strokeDasharray": null
+       }
+      },
+      "visible": true,
+      "shape": "store",
+      "zIndex": 1,
+      "id": "fa2542ff-9ebc-5474-894a-dfe3b6836db4",
+      "data": {
+       "type": "tm.Store",
+       "name": "PostgreSQL: 4 таблицы\nsupplier, product,\n\"order\", order_item",
+       "description": "Данные предметной области; внешние ключи product→supplier, order_item→\"order\"/product; 17 строк демонстрационных данных.",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": true,
+       "threats": [
+        {
+         "id": "81074c3f-a6cf-54dc-9471-b9ebd511ce87",
+         "status": "Open",
+         "severity": "High",
+         "title": "T-05: Несанкционированная модификация данных напрямую в СУБД",
+         "type": "Tampering",
+         "description": "Порт 5432 опубликован на хост (ports: 5432:5432). Пара app_admin/adminsecret задана в открытом виде в docker-compose.yml, поэтому к данным можно подключиться в обход приложения и его ограничений. Оценка DREAD: 20/25.",
+         "mitigation": "Убрать публикацию порта, вынести пароль администратора в секрет, ограничить pg_hba.conf, включить аудит.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "9401bf9b-5ac5-5a08-b206-90e9c2919683",
+         "status": "Open",
+         "severity": "High",
+         "title": "T-15: Использование административной роли app_admin для доступа к данным",
+         "type": "Elevation of privilege",
+         "description": "Роль app_admin — владелец БД с полными правами; её пароль adminsecret записан в docker-compose.yml и crud.env. Недобросовестный пользователь, работающий под app_user, может получить доступ к административной роли, что снимает разграничение прав, введённое в пункте 5 задания №3. Оценка DREAD: 20/25.",
+         "mitigation": "Хранить пароль администратора только в секрете, не включать его в env-файл демонстрации, использовать разные пароли для app_admin и app_user, отключить вход администратора из сети приложения.",
+         "modelType": "STRIDE"
+        },
+        {
+         "id": "0fc6fa3d-b07d-5095-be78-125c4e0c7f9b",
+         "status": "Open",
+         "severity": "Low",
+         "title": "T-11: Чтение данных через незакрытые SQL-операции и обход разграничения доступа",
+         "type": "Information disclosure",
+         "description": "Приложение само формирует SQL по именам колонок и таблиц, взятым из information_schema. Роль app_user имеет SELECT на все 4 таблицы, поэтому при расширении белого списка колонок пользователь сможет вывести любые, в том числе не предназначенные для него, данные. Оценка DREAD: 13/25.",
+         "mitigation": "Ограничить выдаваемый список таблиц и колонок рамками функциональной задачи, предусмотреть представления (VIEW) с маскированными полями, применять политики RLS.",
+         "modelType": "STRIDE"
+        }
+       ],
+       "isALog": false,
+       "storesCredentials": false,
+       "isEncrypted": false,
+       "isSigned": false
+      },
+      "ports": {
+       "groups": {
+        "top": {
+         "position": "top",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "right": {
+         "position": "right",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "bottom": {
+         "position": "bottom",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        },
+        "left": {
+         "position": "left",
+         "attrs": {
+          "circle": {
+           "r": 4,
+           "magnet": true,
+           "stroke": "#5F95FF",
+           "strokeWidth": 1,
+           "fill": "#fff",
+           "style": {
+            "visibility": "hidden"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     {
+      "position": {
+       "x": 60,
+       "y": 690
+      },
+      "size": {
+       "width": 420,
+       "height": 190
+      },
+      "attrs": {
+       "text": {
+        "text": "Обозначения\n\nПунктирная рамка — граница доверия\nПрямоугольник — внешняя сущность (actor)\nОвал — процесс (process)\nДвойная линия — хранилище данных (store)\nСтрелка — поток данных (нумерован)\nКрасный пунктир — поток от нарушителя\n[T-NN] — локализованные угрозы STRIDE"
+       }
+      },
+      "visible": true,
+      "shape": "td-text-block",
+      "zIndex": 1,
+      "id": "84058914-a596-5508-8224-14a3ad32846a",
+      "data": {
+       "type": "tm.Text",
+       "name": "Обозначения\n\nПунктирная рамка — граница доверия\nПрямоугольник — внешняя сущность (actor)\nОвал — процесс (process)\nДвойная линия — хранилище данных (store)\nСтрелка — поток данных (нумерован)\nКрасный пунктир — поток от нарушителя\n[T-NN] — локализованные угрозы STRIDE",
+       "description": "",
+       "outOfScope": false,
+       "reasonOutOfScope": "",
+       "hasOpenThreats": false,
+       "threats": []
+      }
+     }
+    ]
+   }
+  ],
+  "diagramTop": 0,
+  "threatTop": 15
+ },
+ "version": "2.3.0"
+}
