@@ -71,6 +71,56 @@ def xattr(text: str) -> str:
     return escape(text, {'"': "&quot;"}).replace("\n", "&#10;")
 
 
+def _label_size(label: str) -> "tuple[float, float]":
+    lines = label.split("\n")
+    w = max(len(l) for l in lines) * 5.2 + 14
+    h = 15 * len(lines) + 6
+    return w, h
+
+
+def label_offsets() -> "list[tuple[float, float]]":
+    """Жадное размещение подписей потоков без наложения друг на друга
+    и без перекрытия элементов диаграммы (offset в mxGeometry)."""
+    centers = {e["id"]: (e["x"] + e["w"] / 2.0, e["y"] + e["h"] / 2.0)
+               for e in C.ELEMENTS}
+    boxes = [(e["x"] - 6, e["y"] - 6, e["x"] + e["w"] + 6, e["y"] + e["h"] + 6)
+             for e in C.ELEMENTS if e["kind"] != "text"]
+    steps = [(0, 0)]
+    for r in (70, 140, 210, 280, 350):
+        for dy in (0, 36, 72, 108, 144):
+            for sx in (1, -1):
+                steps.append((sx * r, dy))
+                if dy:
+                    steps.append((sx * r, -dy))
+    placed = []
+    offsets = []
+    for i, (src, dst, label, _enc) in enumerate(C.FLOWS, start=1):
+        if src not in centers or dst not in centers:
+            offsets.append((0, 0))
+            continue
+        body = label.split(". ", 1)[-1]
+        w, h = _label_size(body)
+        ax, ay = centers[src]
+        bx, by = centers[dst]
+        base = ((ax + bx) / 2.0, (ay + by) / 2.0)
+        best = (0.0, 0.0)
+        for dx, dy in steps:
+            cx, cy = base[0] + dx, base[1] + dy
+            x1, y1, x2, y2 = cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2
+            if any(bx1 < x2 and x1 < bx2 and by1 < y2 and y1 < by2
+                   for bx1, by1, bx2, by2 in placed):
+                continue
+            if any(bx1 < x2 and x1 < bx2 and by1 < y2 and y1 < by2
+                   for bx1, by1, bx2, by2 in boxes):
+                continue
+            best = (float(dx), float(dy))
+            break
+        placed.append((base[0] + best[0] - w / 2, base[1] + best[1] - h / 2,
+                       base[0] + best[0] + w / 2, base[1] + best[1] + h / 2))
+        offsets.append(best)
+    return offsets
+
+
 def build_drawio() -> str:
     cell = []
     add = cell.append
@@ -97,11 +147,17 @@ def build_drawio() -> str:
                _geom(el["x"], el["y"], el["w"], el["h"])))
 
     # потоки данных
+    offs = label_offsets()
     for i, (src, dst, label, encrypted) in enumerate(C.FLOWS, start=1):
         style = _flow_style(src, dst)
+        ox, oy = offs[i - 1]
+        geom = ('<mxGeometry relative="1" as="geometry">'
+                '<mxPoint x="%d" y="%d" as="offset"/></mxGeometry>'
+                % (round(ox), round(oy))) if (ox or oy) else \
+               '<mxGeometry relative="1" as="geometry"/>'
         add('<mxCell id="f%d" value="%s" style="%s" edge="1" parent="1" '
-            'source="%s" target="%s"><mxGeometry relative="1" as="geometry"/>'
-            '</mxCell>' % (i, xattr(label), style, src, dst))
+            'source="%s" target="%s">%s</mxCell>'
+            % (i, xattr(label), style, src, dst, geom))
 
     body = "\n        ".join(cell)
     return (
