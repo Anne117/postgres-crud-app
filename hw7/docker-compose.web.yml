@@ -52,8 +52,6 @@ services:
       DB_NAME: appdb
     ports:
       - "8081:8000"
-    volumes:
-      - ./logs:/opt/app/logs
     depends_on:
       db:
         condition: service_healthy

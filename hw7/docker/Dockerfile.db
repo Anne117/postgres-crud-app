@@ -1,0 +1,14 @@
+# Образ СУБД: PostgreSQL 18 + сгенерированная локаль ru_RU.UTF-8.
+# Логика практического занятия №1 (та же БД и та же локаль).
+FROM postgres:18
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends locales; \
+    sed -i '/ru_RU.UTF-8/s/^# //g' /etc/locale.gen; \
+    locale-gen; \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG="ru_RU.UTF-8" \
+    LC_ALL="ru_RU.UTF-8" \
+    LC_CTYPE="ru_RU.UTF-8"

@@ -24,9 +24,13 @@
 ## Запуск
 
 ```bash
-docker compose -f docker-compose.web.yml up -d --build
+# из папки hw7 — она самодостаточна, все файлы внутри
+cd hw7
+./run.sh                 # = docker compose -f docker-compose.web.yml up -d --build
 # → http://localhost:8081
 ```
+
+Остановить: `./run.sh down`. Логи: `./run.sh logs`.
 
 Вход:
 
@@ -56,6 +60,16 @@ docker compose -f docker-compose.web.yml up -d --build
 4. **Пароль БД** не попадает в cookie: в браузере хранится только случайный
    идентификатор сессии, сами учётные данные лежат на сервере.
 5. **Неудачные входы** пишутся в `logs/auth.log` с IP, логином и причиной.
+
+## Журнал входов
+
+Файл `logs/auth.log` лежит внутри контейнера. Посмотреть:
+
+```bash
+docker compose -f docker-compose.web.yml exec web cat logs/auth.log
+```
+
+Те же события дублируются в `docker compose logs web`.
 
 ## Демонстрация (пп. 1.1–1.5)
 

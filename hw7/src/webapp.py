@@ -63,9 +63,13 @@ def setup_logging() -> None:
     auth = logging.getLogger("auth")
     auth.setLevel(logging.INFO)
     if not auth.handlers:
-        fh = logging.FileHandler(AUTH_LOG, encoding="utf-8")
-        fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
-        auth.addHandler(fh)
+        try:
+            fh = logging.FileHandler(AUTH_LOG, encoding="utf-8")
+            fh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
+            auth.addHandler(fh)
+        except PermissionError:
+            logging.getLogger(__name__).warning(
+                "журнал %s недоступен для записи — события входа идут только в stdout", AUTH_LOG)
         sh = logging.StreamHandler()
         sh.setFormatter(logging.Formatter("%(asctime)s %(levelname)s %(message)s"))
         auth.addHandler(sh)
