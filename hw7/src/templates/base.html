@@ -133,6 +133,34 @@
     .theme-toggle:hover { border-color: var(--acc); }
     footer { position: relative; z-index: 1; text-align: center; color: var(--muted); font-size: 12px; padding: 0 0 26px; }
 
+
+    /* ---- кошачья дорожка: котики ходят влево-вправо ---- */
+    .cat-runway {
+      position: relative; height: 58px; overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--acc) 6%, transparent));
+    }
+    .cat-runway .walker {
+      position: absolute; bottom: 6px; width: 40px; height: 40px;
+      animation-name: walk-right; animation-timing-function: linear;
+      animation-iteration-count: infinite; animation-duration: var(--dur, 22s);
+      animation-delay: var(--delay, 0s);
+      will-change: transform;
+    }
+    .cat-runway .walker.left { animation-name: walk-left; }
+    .cat-runway .walker .px { width: 40px; height: 40px; }
+    .cat-runway .walker.left .px { transform: scaleX(-1); }
+    @keyframes walk-right {
+      from { transform: translateX(-70px); }
+      to   { transform: translateX(calc(100vw + 70px)); }
+    }
+    @keyframes walk-left {
+      from { transform: translateX(calc(100vw + 70px)); }
+      to   { transform: translateX(-70px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cat-runway .walker, .cat-strip .px { animation: none !important; }
+    }
     /* ---- пиксельные котики ---- */
     .px { display:inline-block; vertical-align:middle; image-rendering: pixelated; }
     .px.sm { width:18px; height:18px; }
@@ -171,6 +199,17 @@
     {% endif %}
   </div>
 </header>
+
+<div class="cat-runway" aria-hidden="true">
+  <span class="walker v1" style="--dur:24s;--delay:-1s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker left v2" style="--dur:31s;--delay:-9s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker v3" style="--dur:19s;--delay:-14s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker left v4" style="--dur:27s;--delay:-4s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker v5" style="--dur:35s;--delay:-20s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker left v1" style="--dur:22s;--delay:-16s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker v2" style="--dur:29s;--delay:-7s"><svg class="px"><use href="#cat-walk"/></svg></span>
+  <span class="walker left v3" style="--dur:17s;--delay:-11s"><svg class="px"><use href="#cat-walk"/></svg></span>
+</div>
 <main>
   <div class="cat-strip" aria-hidden="true">
     <svg class="px v1"><use href="#cat-sit"/></svg>
