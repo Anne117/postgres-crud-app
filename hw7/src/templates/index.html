@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Главная</h1>
+<h1>Мур! Главная 🐾</h1>
 <p class="muted">Пользователь БД: <code>{{ user }}</code> · база <code>{{ db }}</code></p>
 
 <h2>Просмотр данных</h2>
 <div class="grid">
   {% for t in ['supplier','product','order','order_item'] %}
   <div class="card">
-    <h3>{{ {'supplier':'Поставщики','product':'Товары','order':'Заказы','order_item':'Позиции заказов'}[t] }}</h3>
+    <h3><svg class="px sm v{{ loop.index }}"><use href="#cat-face"/></svg>{{ {'supplier':'Поставщики','product':'Товары','order':'Заказы','order_item':'Позиции заказов'}[t] }}</h3>
     <div class="muted"><code>{{ t }}</code></div>
     <div class="links" style="margin-top:10px">
       <a href="{{ url_for('view_table', table=t) }}">Открыть таблицу</a>

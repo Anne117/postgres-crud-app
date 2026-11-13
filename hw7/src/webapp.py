@@ -173,20 +173,22 @@ def table_meta(conn: psycopg.Connection, table: str) -> dict[str, Any]:
         )
         pk = [r[0] for r in cur.fetchall()]
 
+        # pg_catalog, а не information_schema: последняя фильтрует объекты по
+        # владельцу, и непривилегированная роль app_user не видит чужие FK.
         cur.execute(
             """
-            SELECT kcu.column_name, ccu.table_name AS foreign_table,
-                   ccu.column_name AS foreign_column
-              FROM information_schema.table_constraints tc
-              JOIN information_schema.key_column_usage kcu
-                ON tc.constraint_name = kcu.constraint_name
-              JOIN information_schema.constraint_column_usage ccu
-                ON tc.constraint_name = ccu.constraint_name
-             WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = %s
+            SELECT a.attname,
+                   c.confrelid::regclass::text AS foreign_table,
+                   af.attname AS foreign_column
+              FROM pg_constraint c
+              JOIN pg_attribute a  ON a.attrelid  = c.conrelid  AND a.attnum  = ANY (c.conkey)
+              JOIN pg_attribute af ON af.attrelid = c.confrelid AND af.attnum = ANY (c.confkey)
+             WHERE c.contype = 'f' AND c.conrelid = %s::regclass
             """,
-            (table,),
+            (f'public."{table}"',),
         )
-        fks = {r[0]: {"table": r[1], "column": r[2]} for r in cur.fetchall()}
+        fks = {r[0]: {"table": r[1].replace('public.', '').strip('"'),
+                      "column": r[2]} for r in cur.fetchall()}
 
     for col in columns:
         col["is_pk"] = col["column_name"] in pk
@@ -225,6 +227,8 @@ def fk_options(conn: psycopg.Connection, table: str, column: str) -> list[tuple[
 # --------------------------------------------------------------------------- #
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    if request.method == "GET" and current_session() is not None:
+        return redirect(url_for("index"))
     error = None
     if request.method == "POST":
         user = (request.form.get("user") or "").strip()
@@ -337,7 +341,7 @@ def add_row(table: str):
     meta = table_meta(conn, table)
     editable = [c for c in meta["columns"] if not c["readonly"]]
     options = {
-        c["column_name"]: fk_options(conn, c["fk"]["table"], c["column_name"])
+        c["column_name"]: fk_options(conn, c["fk"]["table"], c["fk"]["column"])
         for c in editable if c["fk"]
     }
 
@@ -390,7 +394,7 @@ def edit_row(table: str, row_id: int):
     meta = table_meta(conn, table)
     editable = [c for c in meta["columns"] if not c["readonly"]]
     options = {
-        c["column_name"]: fk_options(conn, c["fk"]["table"], c["column_name"])
+        c["column_name"]: fk_options(conn, c["fk"]["table"], c["fk"]["column"])
         for c in editable if c["fk"]
     }
 

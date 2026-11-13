@@ -1,54 +1,190 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Склад интернет-магазина{% endblock %}</title>
+  <script>
+    // Тема: сохранённый выбор → системная настройка → тёмная по умолчанию.
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var sys = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.dataset.theme = saved || sys;
+      } catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    })();
+  </script>
   <style>
-    :root { --bg:#0f1115; --card:#171a21; --line:#2a2f3a; --fg:#e6e9ef; --muted:#9aa3b2; --acc:#5b8cff; --ok:#3fb950; --err:#f85149; }
+    :root, [data-theme="dark"] {
+      --bg: #1a0f18;
+      --bg-2: #241222;
+      --card: #2a1626;
+      --card-2: #33192d;
+      --line: #4a2440;
+      --fg: #ffe7f4;
+      --muted: #d3a9c4;
+      --acc: #ff6fb5;
+      --acc-2: #ff9ed1;
+      --ok: #7ee787;
+      --err: #ff8a9b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --paw: rgba(255,111,181,.07);
+    }
+    [data-theme="light"] {
+      --bg: #fff4fa;
+      --bg-2: #ffe9f4;
+      --card: #ffffff;
+      --card-2: #fff0f7;
+      --line: #ffd2e6;
+      --fg: #43203a;
+      --muted: #96617f;
+      --acc: #e8478f;
+      --acc-2: #ff8ec2;
+      --ok: #1a8f45;
+      --err: #d33a4f;
+      --shadow: 0 10px 26px rgba(232,71,143,.12);
+      --paw: rgba(232,71,143,.08);
+    }
     * { box-sizing: border-box; }
-    body { margin:0; font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); }
-    header { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--line); }
-    header .brand { font-weight:700; }
-    header .who { color:var(--muted); font-size:13px; }
-    main { max-width:1100px; margin:0 auto; padding:24px 20px 60px; }
-    h1 { font-size:24px; margin:0 0 6px; }
-    h2 { font-size:18px; margin:24px 0 10px; }
-    a { color:var(--acc); }
-    .muted { color:var(--muted); }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; margin-top:18px; }
-    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; }
-    .card h3 { margin:0 0 8px; font-size:16px; }
-    .card .links a { display:inline-block; margin-right:14px; font-size:14px; }
-    table { width:100%; border-collapse:collapse; margin-top:12px; background:var(--card); border-radius:10px; overflow:hidden; }
-    th, td { padding:9px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:14px; }
-    th { color:var(--muted); font-weight:600; }
-    tr:last-child td { border-bottom:none; }
-    .toolbar { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px; }
-    .btn { display:inline-block; padding:9px 14px; border-radius:9px; border:1px solid var(--line); background:#20242e; color:var(--fg); text-decoration:none; cursor:pointer; font-size:14px; }
-    .btn.primary { background:var(--acc); border-color:var(--acc); color:#fff; }
-    input, select { width:100%; padding:9px 11px; border-radius:9px; border:1px solid var(--line); background:#0d0f13; color:var(--fg); font-size:14px; }
-    label { display:block; margin:12px 0 5px; color:var(--muted); font-size:13px; }
-    .flash { padding:10px 14px; border-radius:9px; margin-bottom:14px; font-size:14px; }
-    .flash.ok { background:#12261a; border:1px solid #1f5130; color:#7ee787; }
-    .flash.error { background:#2a1215; border:1px solid #5c1f24; color:#ff9b9b; }
-    code { background:#00000055; padding:2px 6px; border-radius:6px; }
-    .login { max-width:420px; margin:8vh auto; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      font: 15px/1.55 -apple-system, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(1200px 500px at 10% -10%, var(--bg-2), transparent 60%),
+        radial-gradient(900px 400px at 90% 110%, var(--bg-2), transparent 60%),
+        var(--bg);
+      color: var(--fg);
+      transition: background .25s ease, color .25s ease;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: radial-gradient(var(--paw) 1.5px, transparent 1.6px);
+      background-size: 26px 26px;
+      opacity: .55;
+    }
+    header {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--card) 75%, transparent);
+      backdrop-filter: blur(8px);
+    }
+    header .brand { font-weight: 800; letter-spacing: .2px; }
+    header .brand .cat { font-size: 20px; }
+    header .who { color: var(--muted); font-size: 13px; margin-right: 10px; }
+    .hdr-right { display: flex; align-items: center; gap: 10px; }
+    main { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 26px 20px 70px; }
+    h1 { font-size: 26px; margin: 0 0 6px; }
+    h2 { font-size: 18px; margin: 26px 0 12px; }
+    h2::before { content: "🐾 "; }
+    a { color: var(--acc); text-decoration: none; }
+    a:hover { color: var(--acc-2); }
+    .muted { color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; margin-top: 18px; }
+    .card {
+      background: linear-gradient(180deg, var(--card), var(--card-2));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, box-shadow .15s ease, background .25s ease;
+    }
+    .card:hover { transform: translateY(-2px); }
+    .card h3 { margin: 0 0 8px; font-size: 16px; }
+        .card .links a { display: inline-block; margin-right: 14px; font-size: 14px; }
+    table {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      margin-top: 14px; background: var(--card);
+      border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; font-size: 14px; }
+    th { color: var(--muted); font-weight: 700; background: var(--card-2); }
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: color-mix(in srgb, var(--acc) 7%, transparent); }
+    .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+    .btn {
+      display: inline-block; padding: 10px 16px; border-radius: 999px;
+      border: 1px solid var(--line); background: var(--card-2); color: var(--fg);
+      text-decoration: none; cursor: pointer; font-size: 14px; font-weight: 600;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: var(--acc); }
+    .btn.primary { background: linear-gradient(135deg, var(--acc), var(--acc-2)); border-color: transparent; color: #fff; }
+    input, select {
+      width: 100%; padding: 10px 12px; border-radius: 12px;
+      border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 14px;
+    }
+    input:focus, select:focus { outline: 2px solid color-mix(in srgb, var(--acc) 55%, transparent); outline-offset: 1px; }
+    label { display: block; margin: 14px 0 6px; color: var(--muted); font-size: 13px; font-weight: 600; }
+    .flash { padding: 11px 16px; border-radius: 14px; margin-bottom: 14px; font-size: 14px; border: 1px solid var(--line); }
+    .flash.ok { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, transparent); }
+    .flash.error { border-color: color-mix(in srgb, var(--err) 45%, var(--line)); color: var(--err); background: color-mix(in srgb, var(--err) 10%, transparent); }
+    code { background: color-mix(in srgb, var(--acc) 12%, transparent); padding: 2px 7px; border-radius: 8px; }
+    .login { max-width: 440px; margin: 7vh auto; }
+    .login .cats { font-size: 34px; letter-spacing: 6px; text-align: center; margin-bottom: 6px; }
+    .theme-toggle {
+      border: 1px solid var(--line); background: var(--card-2); color: var(--fg);
+      border-radius: 999px; padding: 8px 13px; cursor: pointer; font-size: 14px;
+    }
+    .theme-toggle:hover { border-color: var(--acc); }
+    footer { position: relative; z-index: 1; text-align: center; color: var(--muted); font-size: 12px; padding: 0 0 26px; }
+
+    /* ---- пиксельные котики ---- */
+    .px { display:inline-block; vertical-align:middle; image-rendering: pixelated; }
+    .px.sm { width:18px; height:18px; }
+    .px.md { width:30px; height:30px; }
+    .px.lg { width:72px; height:72px; }
+    .v1 { --cat-body:#ffb3d9; --cat-dark:#7a2b52; }
+    .v2 { --cat-body:#ffd6a5; --cat-dark:#8a4b1f; }
+    .v3 { --cat-body:#c9b6ff; --cat-dark:#4b2f7a; }
+    .v4 { --cat-body:#a8e6cf; --cat-dark:#1f6b56; }
+    .v5 { --cat-body:#ffc9de; --cat-dark:#8a1f4b; }
+    .cat-strip { display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin:10px 0 6px; }
+    .cat-strip .px { width:44px; height:44px; animation: catbob 2.6s ease-in-out infinite; }
+    .cat-strip .px:nth-child(2n) { animation-delay:.4s; }
+    .cat-strip .px:nth-child(3n) { animation-delay:.8s; }
+    .cat-strip .px:nth-child(4n) { animation-delay:1.2s; }
+    @keyframes catbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+    .card h3 .px { width:26px; height:26px; margin-right:7px; }
+    .login .cat-strip { justify-content:center; }
+    .footer-cats { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:6px; opacity:.9; }
+    .footer-cats .px { width:26px; height:26px; }
+    h2 .px { margin-right:6px; }
+    @media (max-width: 560px) { h1 { font-size: 22px; } .grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
+{% include '_pixel_cats.html' %}
 <header>
-  <div class="brand">Склад интернет-магазина · ПЗ №7</div>
-  {% if session.get('sid') %}
-  <div>
-    <span class="who">{{ user or '' }}</span>
+  <div class="brand"><span class="cat">🐱</span> Склад интернет-магазина · ПЗ №7</div>
+  <div class="hdr-right">
+    {% if session.get('sid') %}<span class="who">{{ user or '' }}</span>{% endif %}
+    <button class="theme-toggle" id="themeToggle" type="button" title="Сменить тему">🌙</button>
+    {% if session.get('sid') %}
     <form method="post" action="{{ url_for('logout') }}" style="display:inline">
       <button class="btn" type="submit">Выйти</button>
     </form>
+    {% endif %}
   </div>
-  {% endif %}
 </header>
 <main>
+  <div class="cat-strip" aria-hidden="true">
+    <svg class="px v1"><use href="#cat-sit"/></svg>
+    <svg class="px v2"><use href="#cat-walk"/></svg>
+    <svg class="px v3"><use href="#cat-face"/></svg>
+    <svg class="px v4"><use href="#cat-sit"/></svg>
+    <svg class="px v5"><use href="#cat-walk"/></svg>
+    <svg class="px v2"><use href="#cat-face"/></svg>
+    <svg class="px v1"><use href="#cat-walk"/></svg>
+    <svg class="px v3"><use href="#cat-sit"/></svg>
+    <svg class="px v5"><use href="#cat-face"/></svg>
+    <svg class="px v2"><use href="#cat-walk"/></svg>
+    <svg class="px v4"><use href="#cat-face"/></svg>
+  </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% for cat, msg in messages %}
       <div class="flash {{ cat }}">{{ msg }}</div>
@@ -56,5 +192,35 @@
   {% endwith %}
   {% block content %}{% endblock %}
 </main>
+<footer>
+  <div class="footer-cats" aria-hidden="true">
+    <svg class="px v1"><use href="#cat-face"/></svg>
+    <svg class="px v2"><use href="#cat-face"/></svg>
+    <svg class="px v3"><use href="#cat-face"/></svg>
+    <svg class="px v4"><use href="#cat-face"/></svg>
+    <svg class="px v5"><use href="#cat-face"/></svg>
+    <svg class="px v4"><use href="#cat-face"/></svg>
+    <svg class="px v3"><use href="#cat-face"/></svg>
+    <svg class="px v2"><use href="#cat-face"/></svg>
+    <svg class="px v1"><use href="#cat-face"/></svg>
+  </div>
+  🐾 мур · {{ db or '' }}
+</footer>
+<script>
+  (function () {
+    var btn = document.getElementById('themeToggle');
+    function paint() {
+      var t = document.documentElement.dataset.theme;
+      btn.textContent = t === 'dark' ? '🌙' : '☀️';
+    }
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      paint();
+    });
+    paint();
+  })();
+</script>
 </body>
 </html>

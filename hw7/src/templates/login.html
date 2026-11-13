@@ -2,6 +2,13 @@
 {% block title %}Вход{% endblock %}
 {% block content %}
 <div class="login card">
+  <div class="cat-strip v1" aria-hidden="true">
+    <svg class="px"><use href="#cat-sit"/></svg>
+    <svg class="px v2"><use href="#cat-walk"/></svg>
+    <svg class="px v3"><use href="#cat-face"/></svg>
+    <svg class="px v4"><use href="#cat-sit"/></svg>
+    <svg class="px v5"><use href="#cat-walk"/></svg>
+  </div>
   <h1>Вход в приложение</h1>
   <p class="muted">Учётные данные пользователя БД. База: <code>{{ db }}</code></p>
   {% if error %}<div class="flash error">{{ error }}</div>{% endif %}
