@@ -1,15 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{% if edit_mode %}Выбор таблицы для изменения{% else %}Таблицы базы данных{% endif %}</h1>
+<div class="page-head">
+  <div>
+    <h1>{% if edit_mode %}Что правим?{% else %}Таблицы базы{% endif %} 🐾</h1>
+    <p class="sub">{% if edit_mode %}Выбери таблицу — дальше найдёшь строку и нажмёшь «Изменить»{% else %}Четыре таблицы, три внешних ключа{% endif %}</p>
+  </div>
+</div>
+
 <div class="grid">
   {% for t in tables %}
   <div class="card">
-    <h3>{{ titles[t] }}</h3>
-    <div class="muted"><code>{{ t }}</code>{% if counts %} · строк: {{ counts[t] }}{% endif %}</div>
-    <div class="links" style="margin-top:10px">
-      <a href="{{ url_for('view_table', table=t) }}">Открыть</a>
+    <div class="top">
+      <h3><svg class="px v{{ loop.index }}"><use href="#cat-face"/></svg>{{ titles[t] }}</h3>
+    </div>
+    {% if counts %}<div class="count">{{ counts[t] }}</div>{% endif %}
+    <div class="tname">{{ t }}{% if counts %} · строк: {{ counts[t] }}{% endif %}</div>
+    <div class="actions">
+      <a class="btn sm" href="{{ url_for('view_table', table=t) }}">{% if edit_mode %}Выбрать строку{% else %}Открыть{% endif %}</a>
       {% if not edit_mode %}
-      <a href="{{ url_for('add_row', table=t) }}">Добавить</a>
+      <a class="btn sm ghost" href="{{ url_for('add_row', table=t) }}">+ Добавить</a>
       {% endif %}
     </div>
   </div>

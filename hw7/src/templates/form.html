@@ -1,46 +1,55 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{% if action == 'add' %}Добавление строки{% else %}Изменение записи{% endif %} · {{ meta.title }}</h1>
-<p class="muted">Таблица <code>{{ meta.name }}</code></p>
+<div class="page-head">
+  <div>
+    <h1>{% if action == 'add' %}Новая строка{% else %}Правка записи{% endif %} <span class="muted" style="font-size:15px;font-weight:500">/ {{ meta.name }}</span></h1>
+    <p class="sub">{% if action == 'add' %}Заполни поля — значения уйдут параметрами, без склейки SQL{% else %}Поля предзаполнены текущими значениями{% endif %}</p>
+  </div>
+  <a class="btn" href="{{ url_for('view_table', table=meta.name) }}">← Назад к таблице</a>
+</div>
 
-<form method="post" class="card" style="margin-top:16px">
-  {% for c in editable %}
-    {% set val = row[c.column_name] if row else None %}
-    <label for="{{ c.column_name }}">
-      {{ c.column_name }}
-      <span class="muted">— {{ c.data_type }}{% if c.is_nullable == 'NO' %} · обязательное{% endif %}</span>
-    </label>
+<form method="post" class="formcard">
+  <div class="fields">
+    {% for c in editable %}
+      {% set val = row[c.column_name] if row else None %}
+      <div class="field {% if c.column_name in ['title','description'] %}wide{% endif %}">
+        <label for="{{ c.column_name }}">
+          {{ c.column_name }}
+          <span class="type">{{ c.data_type }}{% if c.is_nullable == 'NO' %} <span class="req">*</span>{% endif %}</span>
+        </label>
 
-    {% if c.fk %}
-      {% set opts = options.get(c.column_name, []) %}
-      <select id="{{ c.column_name }}" name="{{ c.column_name }}">
-        <option value="">— выберите —</option>
-        {% for val, label in opts %}
-          <option value="{{ val }}"
-            {% if row and row[c.column_name]|string == val|string %}selected{% endif %}>{{ label }}</option>
-        {% endfor %}
-      </select>
-    {% elif c.column_name == 'status' %}
-      <select id="status" name="status">
-        {% for s in ['new','paid','shipped','cancelled'] %}
-          <option value="{{ s }}" {% if row and row['status'] == s %}selected{% endif %}>{{ s }}</option>
-        {% endfor %}
-      </select>
-    {% else %}
-      <input id="{{ c.column_name }}" name="{{ c.column_name }}"
-             value="{{ row[c.column_name] if row else '' }}"
-             {% if c.is_nullable == 'NO' %}required{% endif %}>
-    {% endif %}
-  {% endfor %}
+        {% if c.fk %}
+          {% set opts = options.get(c.column_name, []) %}
+          <select id="{{ c.column_name }}" name="{{ c.column_name }}" {% if c.is_nullable == 'NO' %}required{% endif %}>
+            <option value="">— выберите —</option>
+            {% for opt_val, label in opts %}
+              <option value="{{ opt_val }}" {% if row and row[c.column_name]|string == opt_val|string %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        {% elif c.column_name == 'status' %}
+          <select id="status" name="status">
+            {% for s in ['new','paid','shipped','cancelled'] %}
+              <option value="{{ s }}" {% if row and row['status'] == s %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input id="{{ c.column_name }}" name="{{ c.column_name }}"
+                 value="{{ row[c.column_name] if row else '' }}"
+                 {% if c.is_nullable == 'NO' %}required{% endif %}
+                 placeholder="{{ c.data_type }}">
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
 
-  <div class="toolbar" style="margin-top:20px">
-    <button class="btn primary" type="submit">{% if action == 'add' %}Добавить{% else %}Сохранить{% endif %}</button>
-    <a class="btn" href="{{ url_for('view_table', table=meta.name) }}">Отмена</a>
+  <div class="formactions">
+    <button class="btn primary" type="submit">{% if action == 'add' %}Добавить строку{% else %}Сохранить изменения{% endif %}</button>
+    <a class="btn ghost" href="{{ url_for('view_table', table=meta.name) }}">Отмена</a>
   </div>
 </form>
 
-<p class="muted" style="margin-top:14px;font-size:13px">
-  Все значения передаются в SQL только как параметры драйвера. Имена колонок берутся
-  из метаданных БД (белый список) и подставляются через <code>sql.Identifier</code>.
+<p class="muted" style="margin-top:16px;font-size:13px">
+  🐾 имена колонок берутся из метаданных и подставляются через <code>sql.Identifier</code>,
+  значения — только параметрами драйвера.
 </p>
 {% endblock %}

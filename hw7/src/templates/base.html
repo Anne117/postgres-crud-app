@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Склад интернет-магазина{% endblock %}</title>
   <script>
-    // Тема: сохранённый выбор → системная настройка → тёмная по умолчанию.
     (function () {
       try {
         var saved = localStorage.getItem('theme');
@@ -15,186 +14,321 @@
     })();
   </script>
   <style>
+    /* ============ токены ============ */
     :root, [data-theme="dark"] {
-      --bg: #1a0f18;
-      --bg-2: #241222;
-      --card: #2a1626;
-      --card-2: #33192d;
-      --line: #4a2440;
-      --fg: #ffe7f4;
-      --muted: #d3a9c4;
-      --acc: #ff6fb5;
-      --acc-2: #ff9ed1;
-      --ok: #7ee787;
-      --err: #ff8a9b;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --paw: rgba(255,111,181,.07);
+      --bg: #150b12;
+      --bg-deep: #0d060c;
+      --surface: rgba(255, 214, 235, .055);
+      --surface-2: rgba(255, 214, 235, .09);
+      --card: #22131d;
+      --card-2: #2a1725;
+      --line: rgba(255, 160, 205, .16);
+      --line-strong: rgba(255, 160, 205, .3);
+      --fg: #fff1f8;
+      --muted: #cfa2bd;
+      --acc: #ff5fa2;
+      --acc-2: #c86bff;
+      --acc-soft: rgba(255, 95, 162, .14);
+      --ok: #6ee7a8;
+      --err: #ff8fa3;
+      --shadow: 0 24px 60px -20px rgba(0,0,0,.7);
+      --glow: 0 0 0 1px rgba(255,255,255,.04), 0 18px 44px -18px rgba(255,95,162,.45);
     }
     [data-theme="light"] {
-      --bg: #fff4fa;
-      --bg-2: #ffe9f4;
+      --bg: #fff7fb;
+      --bg-deep: #ffeaf5;
+      --surface: rgba(255, 255, 255, .72);
+      --surface-2: rgba(255, 255, 255, .9);
       --card: #ffffff;
-      --card-2: #fff0f7;
-      --line: #ffd2e6;
-      --fg: #43203a;
-      --muted: #96617f;
+      --card-2: #fff3f9;
+      --line: rgba(214, 92, 150, .16);
+      --line-strong: rgba(214, 92, 150, .32);
+      --fg: #33132a;
+      --muted: #96607f;
       --acc: #e8478f;
-      --acc-2: #ff8ec2;
-      --ok: #1a8f45;
-      --err: #d33a4f;
-      --shadow: 0 10px 26px rgba(232,71,143,.12);
-      --paw: rgba(232,71,143,.08);
+      --acc-2: #a855f7;
+      --acc-soft: rgba(232, 71, 143, .1);
+      --ok: #148a4b;
+      --err: #c62f45;
+      --shadow: 0 24px 60px -26px rgba(232,71,143,.35);
+      --glow: 0 0 0 1px rgba(255,255,255,.6), 0 18px 44px -18px rgba(232,71,143,.35);
     }
+
     * { box-sizing: border-box; }
-    html, body { min-height: 100%; }
+    html { scroll-behavior: smooth; }
     body {
-      margin: 0;
-      font: 15px/1.55 -apple-system, "Segoe UI", Roboto, sans-serif;
-      background:
-        radial-gradient(1200px 500px at 10% -10%, var(--bg-2), transparent 60%),
-        radial-gradient(900px 400px at 90% 110%, var(--bg-2), transparent 60%),
-        var(--bg);
+      margin: 0; min-height: 100vh;
+      font: 15px/1.6 ui-sans-serif, -apple-system, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
       color: var(--fg);
-      transition: background .25s ease, color .25s ease;
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      transition: background .3s ease, color .3s ease;
+      overflow-x: hidden;
     }
-    body::before {
-      content: "";
-      position: fixed; inset: 0; pointer-events: none; z-index: 0;
-      background-image: radial-gradient(var(--paw) 1.5px, transparent 1.6px);
-      background-size: 26px 26px;
-      opacity: .55;
-    }
+
+    /* ============ фон: аврора ============ */
+    .aurora { position: fixed; inset: -20vh -10vw; z-index: 0; pointer-events: none; filter: blur(90px); opacity: .55; }
+    .aurora span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
+    [data-theme="light"] .aurora { opacity: .5; mix-blend-mode: multiply; }
+    .aurora .a1 { width: 46vw; height: 46vw; left: -6vw; top: -6vh; background: radial-gradient(circle, var(--acc), transparent 65%); animation: drift1 26s ease-in-out infinite alternate; }
+    .aurora .a2 { width: 40vw; height: 40vw; right: -8vw; top: 10vh; background: radial-gradient(circle, var(--acc-2), transparent 65%); animation: drift2 31s ease-in-out infinite alternate; }
+    .aurora .a3 { width: 34vw; height: 34vw; left: 30vw; bottom: -18vh; background: radial-gradient(circle, #ff9ed1, transparent 65%); animation: drift3 24s ease-in-out infinite alternate; }
+    @keyframes drift1 { to { transform: translate3d(6vw, 5vh, 0) scale(1.12); } }
+    @keyframes drift2 { to { transform: translate3d(-7vw, 8vh, 0) scale(1.08); } }
+    @keyframes drift3 { to { transform: translate3d(4vw, -6vh, 0) scale(1.15); } }
+
+    /* ============ шапка ============ */
     header {
-      position: relative; z-index: 1;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 14px 22px;
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 18px;
+      padding: 12px 26px;
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      backdrop-filter: blur(18px) saturate(140%);
       border-bottom: 1px solid var(--line);
-      background: color-mix(in srgb, var(--card) 75%, transparent);
-      backdrop-filter: blur(8px);
     }
-    header .brand { font-weight: 800; letter-spacing: .2px; }
-    header .brand .cat { font-size: 20px; }
-    header .who { color: var(--muted); font-size: 13px; margin-right: 10px; }
-    .hdr-right { display: flex; align-items: center; gap: 10px; }
-    main { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 26px 20px 70px; }
-    h1 { font-size: 26px; margin: 0 0 6px; }
-    h2 { font-size: 18px; margin: 26px 0 12px; }
-    h2::before { content: "🐾 "; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+    .brand .px { width: 30px; height: 30px; }
+    .brand small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+    nav.mainnav { display: flex; gap: 4px; margin-left: 8px; flex-wrap: wrap; }
+    nav.mainnav a {
+      padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 600;
+      color: var(--muted); text-decoration: none; transition: .18s ease;
+    }
+    nav.mainnav a:hover { color: var(--fg); background: var(--surface-2); }
+    nav.mainnav a.active { color: var(--fg); background: var(--acc-soft); box-shadow: inset 0 0 0 1px var(--line-strong); }
+    .hdr-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+    .userchip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 12px 6px 8px; border-radius: 999px;
+      background: var(--surface); border: 1px solid var(--line);
+      font-size: 13px; color: var(--muted);
+    }
+    .userchip b { color: var(--fg); font-weight: 600; }
+    .avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--acc), var(--acc-2));
+      display: grid; place-items: center; font-size: 13px; color: #fff;
+    }
+
+    /* ============ кнопки ============ */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line);
+      background: var(--surface-2); color: var(--fg); cursor: pointer;
+      font: inherit; font-size: 14px; font-weight: 600; text-decoration: none;
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: var(--line-strong); box-shadow: var(--glow); }
+    .btn:active { transform: translateY(0) scale(.99); }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--acc), var(--acc-2));
+      border-color: transparent; color: #fff;
+      box-shadow: 0 10px 26px -12px var(--acc);
+    }
+    .btn.primary:hover { box-shadow: 0 16px 34px -14px var(--acc); }
+    .btn.ghost { background: transparent; }
+    .btn.sm { padding: 7px 13px; font-size: 13px; }
+    .btn.icon { padding: 9px 12px; }
+    .theme-toggle {
+      width: 38px; height: 38px; display: grid; place-items: center;
+      border-radius: 999px; border: 1px solid var(--line);
+      background: var(--surface-2); color: var(--fg); cursor: pointer; font-size: 16px;
+      transition: .2s ease;
+    }
+    .theme-toggle:hover { border-color: var(--line-strong); transform: rotate(-12deg); }
+
+    /* ============ основная сетка ============ */
+    main { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 34px 24px 96px; }
+    .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-bottom: 22px; }
+    h1 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; letter-spacing: -.03em; margin: 0 0 6px; }
+    h1 .accent { background: linear-gradient(120deg, var(--acc), var(--acc-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .sub { color: var(--muted); font-size: 14px; margin: 0; }
+    h2 { font-size: 18px; letter-spacing: -.01em; margin: 34px 0 12px; display: flex; align-items: center; gap: 9px; }
+    h2 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 12px var(--acc); }
     a { color: var(--acc); text-decoration: none; }
     a:hover { color: var(--acc-2); }
     .muted { color: var(--muted); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; margin-top: 18px; }
-    .card {
-      background: linear-gradient(180deg, var(--card), var(--card-2));
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em;
+      background: var(--acc-soft); padding: 3px 8px; border-radius: 8px;
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
+    }
+
+    /* ============ карточки ============ */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; }
+    .card {
+      position: relative; overflow: hidden;
+      background: linear-gradient(165deg, var(--card), var(--card-2));
+      border: 1px solid var(--line); border-radius: 22px; padding: 20px;
       box-shadow: var(--shadow);
-      transition: transform .15s ease, box-shadow .15s ease, background .25s ease;
+      transition: transform .2s ease, border-color .2s ease, box-shadow .25s ease;
     }
-    .card:hover { transform: translateY(-2px); }
-    .card h3 { margin: 0 0 8px; font-size: 16px; }
-        .card .links a { display: inline-block; margin-right: 14px; font-size: 14px; }
-    table {
-      width: 100%; border-collapse: separate; border-spacing: 0;
-      margin-top: 14px; background: var(--card);
-      border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
-      box-shadow: var(--shadow);
+    .card::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(420px 160px at 110% -20%, var(--acc-soft), transparent 70%);
+      opacity: .8;
     }
-    th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; font-size: 14px; }
-    th { color: var(--muted); font-weight: 700; background: var(--card-2); }
-    tr:last-child td { border-bottom: none; }
-    tbody tr:hover td { background: color-mix(in srgb, var(--acc) 7%, transparent); }
-    .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
-    .btn {
-      display: inline-block; padding: 10px 16px; border-radius: 999px;
-      border: 1px solid var(--line); background: var(--card-2); color: var(--fg);
-      text-decoration: none; cursor: pointer; font-size: 14px; font-weight: 600;
-      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+    .card:hover { transform: translateY(-3px); border-color: var(--line-strong); box-shadow: var(--shadow), var(--glow); }
+    .card > * { position: relative; z-index: 1; }
+    .card .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .card h3 { margin: 0; font-size: 16px; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+    .card h3 .px { width: 26px; height: 26px; }
+    .card .count {
+      font-size: 28px; font-weight: 800; letter-spacing: -.03em;
+      background: linear-gradient(120deg, var(--fg), var(--muted)); -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin: 14px 0 2px;
     }
-    .btn:hover { transform: translateY(-1px); border-color: var(--acc); }
-    .btn.primary { background: linear-gradient(135deg, var(--acc), var(--acc-2)); border-color: transparent; color: #fff; }
+    .card .tname { font-size: 12px; color: var(--muted); font-family: ui-monospace, monospace; }
+    .card .actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+    /* ============ таблица ============ */
+    .tablewrap {
+      border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+      background: var(--card); box-shadow: var(--shadow);
+    }
+    .tablewrap .thead-shadow { position: sticky; top: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th {
+      position: sticky; top: 0; z-index: 2;
+      background: color-mix(in srgb, var(--card-2) 92%, transparent);
+      backdrop-filter: blur(10px);
+      text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--muted); font-weight: 700; padding: 12px 16px;
+      border-bottom: 1px solid var(--line-strong); white-space: nowrap;
+    }
+    tbody td { padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--acc) 3%, transparent); }
+    tbody tr:hover td { background: var(--acc-soft); }
+    tbody tr:last-child td { border-bottom: none; }
+    td.num { font-variant-numeric: tabular-nums; }
+
+    /* ============ формы ============ */
+    .formcard { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; box-shadow: var(--shadow); }
+    .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.wide { grid-column: 1 / -1; }
+    .field label { font-size: 13px; font-weight: 600; color: var(--muted); display: flex; gap: 6px; align-items: baseline; }
+    .field label .type { font-weight: 500; font-size: 11px; opacity: .7; }
+    .field .req { color: var(--acc); }
     input, select {
-      width: 100%; padding: 10px 12px; border-radius: 12px;
-      border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 14px;
+      width: 100%; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: 14px;
+      border: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 70%, transparent); color: var(--fg);
+      transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
     }
-    input:focus, select:focus { outline: 2px solid color-mix(in srgb, var(--acc) 55%, transparent); outline-offset: 1px; }
-    label { display: block; margin: 14px 0 6px; color: var(--muted); font-size: 13px; font-weight: 600; }
-    .flash { padding: 11px 16px; border-radius: 14px; margin-bottom: 14px; font-size: 14px; border: 1px solid var(--line); }
-    .flash.ok { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, transparent); }
-    .flash.error { border-color: color-mix(in srgb, var(--err) 45%, var(--line)); color: var(--err); background: color-mix(in srgb, var(--err) 10%, transparent); }
-    code { background: color-mix(in srgb, var(--acc) 12%, transparent); padding: 2px 7px; border-radius: 8px; }
-    .login { max-width: 440px; margin: 7vh auto; }
-    .login .cats { font-size: 34px; letter-spacing: 6px; text-align: center; margin-bottom: 6px; }
-    .theme-toggle {
-      border: 1px solid var(--line); background: var(--card-2); color: var(--fg);
-      border-radius: 999px; padding: 8px 13px; cursor: pointer; font-size: 14px;
+    input:hover, select:hover { border-color: var(--line-strong); }
+    input:focus, select:focus {
+      outline: none; border-color: var(--acc);
+      box-shadow: 0 0 0 4px var(--acc-soft);
+      background: color-mix(in srgb, var(--bg) 40%, transparent);
     }
-    .theme-toggle:hover { border-color: var(--acc); }
-    footer { position: relative; z-index: 1; text-align: center; color: var(--muted); font-size: 12px; padding: 0 0 26px; }
+    .formactions { display: flex; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
 
+    /* ============ служебное ============ */
+    .flash { padding: 12px 16px; border-radius: 14px; margin-bottom: 14px; font-size: 14px; border: 1px solid var(--line); display: flex; gap: 10px; align-items: center; }
+    .flash.ok { border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); color: var(--ok); background: color-mix(in srgb, var(--ok) 9%, transparent); }
+    .flash.error { border-color: color-mix(in srgb, var(--err) 45%, var(--line)); color: var(--err); background: color-mix(in srgb, var(--err) 9%, transparent); }
+    .toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .toolbar .grow { flex: 1 1 220px; }
+    .toolbar form { display: flex; gap: 8px; align-items: center; }
+    .pager { display: flex; gap: 8px; margin-top: 16px; }
+    .empty { padding: 40px 20px; text-align: center; color: var(--muted); }
+    .empty .px { width: 56px; height: 56px; opacity: .8; display: block; margin: 0 auto 10px; }
 
-    /* ---- кошачья дорожка: котики ходят влево-вправо ---- */
-    .cat-runway {
-      position: relative; height: 58px; overflow: hidden;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--acc) 6%, transparent));
+    /* ============ логин ============ */
+    .login-wrap { min-height: calc(100vh - 90px); display: grid; place-items: center; padding: 24px; }
+    .login-card {
+      width: min(960px, 100%); display: grid; grid-template-columns: 1.05fr .95fr;
+      background: var(--card); border: 1px solid var(--line); border-radius: 28px;
+      overflow: hidden; box-shadow: var(--shadow);
     }
-    .cat-runway .walker {
-      position: absolute; bottom: 6px; width: 40px; height: 40px;
-      animation-name: walk-right; animation-timing-function: linear;
-      animation-iteration-count: infinite; animation-duration: var(--dur, 22s);
-      animation-delay: var(--delay, 0s);
-      will-change: transform;
+    .login-art {
+      position: relative; padding: 34px; display: flex; flex-direction: column; justify-content: space-between;
+      background:
+        radial-gradient(600px 300px at 20% 0%, var(--acc-soft), transparent 70%),
+        linear-gradient(160deg, var(--card-2), transparent);
+      border-right: 1px solid var(--line); min-height: 380px;
     }
-    .cat-runway .walker.left { animation-name: walk-left; }
-    .cat-runway .walker .px { width: 40px; height: 40px; }
-    .cat-runway .walker.left .px { transform: scaleX(-1); }
-    @keyframes walk-right {
-      from { transform: translateX(-70px); }
-      to   { transform: translateX(calc(100vw + 70px)); }
-    }
-    @keyframes walk-left {
-      from { transform: translateX(calc(100vw + 70px)); }
-      to   { transform: translateX(-70px); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .cat-runway .walker, .cat-strip .px { animation: none !important; }
-    }
-    /* ---- пиксельные котики ---- */
-    .px { display:inline-block; vertical-align:middle; image-rendering: pixelated; }
-    .px.sm { width:18px; height:18px; }
-    .px.md { width:30px; height:30px; }
-    .px.lg { width:72px; height:72px; }
+    .login-art h2 { font-size: 24px; margin: 0 0 8px; letter-spacing: -.02em; display: block; }
+    .login-art p { color: var(--muted); margin: 0; font-size: 14px; max-width: 30ch; }
+    .login-art .cat-stage { position: relative; height: 150px; margin-top: 20px; }
+    .login-art .cat-stage .px { position: absolute; bottom: 0; width: 78px; height: 78px; }
+    .login-form { padding: 34px; display: flex; flex-direction: column; justify-content: center; }
+    .login-form h1 { font-size: 26px; margin: 0 0 4px; }
+    .login-form .sub { margin-bottom: 20px; }
+    .login-form .field { margin-bottom: 14px; }
+    .login-form .btn.primary { width: 100%; justify-content: center; margin-top: 8px; }
+
+    /* ============ котики ============ */
+    .px { display: inline-block; vertical-align: middle; image-rendering: pixelated; }
+    .px.sm { width: 18px; height: 18px; }
+    .px.md { width: 30px; height: 30px; }
     .v1 { --cat-body:#ffb3d9; --cat-dark:#7a2b52; }
     .v2 { --cat-body:#ffd6a5; --cat-dark:#8a4b1f; }
     .v3 { --cat-body:#c9b6ff; --cat-dark:#4b2f7a; }
     .v4 { --cat-body:#a8e6cf; --cat-dark:#1f6b56; }
     .v5 { --cat-body:#ffc9de; --cat-dark:#8a1f4b; }
-    .cat-strip { display:flex; gap:10px; align-items:flex-end; flex-wrap:wrap; margin:10px 0 6px; }
-    .cat-strip .px { width:44px; height:44px; animation: catbob 2.6s ease-in-out infinite; }
-    .cat-strip .px:nth-child(2n) { animation-delay:.4s; }
-    .cat-strip .px:nth-child(3n) { animation-delay:.8s; }
-    .cat-strip .px:nth-child(4n) { animation-delay:1.2s; }
-    @keyframes catbob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
-    .card h3 .px { width:26px; height:26px; margin-right:7px; }
-    .login .cat-strip { justify-content:center; }
-    .footer-cats { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:6px; opacity:.9; }
-    .footer-cats .px { width:26px; height:26px; }
-    h2 .px { margin-right:6px; }
-    @media (max-width: 560px) { h1 { font-size: 22px; } .grid { grid-template-columns: 1fr; } }
+
+    .cat-runway {
+      position: relative; height: 54px; overflow: hidden; z-index: 1;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, transparent, var(--acc-soft));
+    }
+    .cat-runway .walker {
+      position: absolute; bottom: 5px; width: 38px; height: 38px;
+      animation-name: walk-right; animation-timing-function: linear;
+      animation-iteration-count: infinite; animation-duration: var(--dur, 22s);
+      animation-delay: var(--delay, 0s); will-change: transform;
+    }
+    .cat-runway .walker.left { animation-name: walk-left; }
+    .cat-runway .walker .px { width: 38px; height: 38px; }
+    .cat-runway .walker.left .px { transform: scaleX(-1); }
+    @keyframes walk-right { from { transform: translateX(-70px); } to { transform: translateX(calc(100vw + 70px)); } }
+    @keyframes walk-left  { from { transform: translateX(calc(100vw + 70px)); } to { transform: translateX(-70px); } }
+
+    footer { position: relative; z-index: 1; padding: 26px 0 34px; text-align: center; color: var(--muted); font-size: 12px; }
+    .footer-cats { display: flex; justify-content: center; gap: 10px; margin-bottom: 8px; }
+    .footer-cats .px { width: 24px; height: 24px; opacity: .85; }
+
+    @media (max-width: 860px) {
+      .login-card { grid-template-columns: 1fr; }
+      .login-art { border-right: none; border-bottom: 1px solid var(--line); min-height: 220px; padding: 24px; }
+      .login-art .cat-stage { height: 96px; }
+      .fields { grid-template-columns: 1fr; }
+      header { padding: 10px 14px; gap: 10px; }
+      nav.mainnav { order: 3; width: 100%; overflow-x: auto; }
+      main { padding: 22px 14px 80px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cat-runway .walker, .aurora span { animation: none !important; }
+      * { scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
 {% include '_pixel_cats.html' %}
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
 <header>
-  <div class="brand"><span class="cat">🐱</span> Склад интернет-магазина · ПЗ №7</div>
+  <div class="brand">
+    <svg class="px v1"><use href="#cat-face"/></svg>
+    <span>Склад<small>ПЗ №7 · PostgreSQL</small></span>
+  </div>
+  {% if session.get('sid') %}
+  <nav class="mainnav">
+    <a href="{{ url_for('index') }}" class="{{ 'active' if request.endpoint == 'index' }}">Обзор</a>
+    <a href="{{ url_for('tables') }}" class="{{ 'active' if request.endpoint == 'tables' }}">Таблицы</a>
+    <a href="{{ url_for('edit_choose') }}" class="{{ 'active' if request.endpoint in ['edit_choose','edit_row'] }}">Изменение</a>
+  </nav>
+  {% endif %}
   <div class="hdr-right">
-    {% if session.get('sid') %}<span class="who">{{ user or '' }}</span>{% endif %}
+    {% if session.get('sid') %}
+    <span class="userchip"><span class="avatar">🐱</span><b>{{ user or '' }}</b></span>
+    {% endif %}
     <button class="theme-toggle" id="themeToggle" type="button" title="Сменить тему">🌙</button>
     {% if session.get('sid') %}
     <form method="post" action="{{ url_for('logout') }}" style="display:inline">
-      <button class="btn" type="submit">Выйти</button>
+      <button class="btn ghost sm" type="submit">Выйти</button>
     </form>
     {% endif %}
   </div>
@@ -210,27 +344,16 @@
   <span class="walker v2" style="--dur:29s;--delay:-7s"><svg class="px"><use href="#cat-walk"/></svg></span>
   <span class="walker left v3" style="--dur:17s;--delay:-11s"><svg class="px"><use href="#cat-walk"/></svg></span>
 </div>
+
 <main>
-  <div class="cat-strip" aria-hidden="true">
-    <svg class="px v1"><use href="#cat-sit"/></svg>
-    <svg class="px v2"><use href="#cat-walk"/></svg>
-    <svg class="px v3"><use href="#cat-face"/></svg>
-    <svg class="px v4"><use href="#cat-sit"/></svg>
-    <svg class="px v5"><use href="#cat-walk"/></svg>
-    <svg class="px v2"><use href="#cat-face"/></svg>
-    <svg class="px v1"><use href="#cat-walk"/></svg>
-    <svg class="px v3"><use href="#cat-sit"/></svg>
-    <svg class="px v5"><use href="#cat-face"/></svg>
-    <svg class="px v2"><use href="#cat-walk"/></svg>
-    <svg class="px v4"><use href="#cat-face"/></svg>
-  </div>
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% for cat, msg in messages %}
-      <div class="flash {{ cat }}">{{ msg }}</div>
+      <div class="flash {{ cat }}">{% if cat == 'ok' %}✅{% else %}⚠️{% endif %} {{ msg }}</div>
     {% endfor %}
   {% endwith %}
   {% block content %}{% endblock %}
 </main>
+
 <footer>
   <div class="footer-cats" aria-hidden="true">
     <svg class="px v1"><use href="#cat-face"/></svg>
@@ -241,10 +364,10 @@
     <svg class="px v4"><use href="#cat-face"/></svg>
     <svg class="px v3"><use href="#cat-face"/></svg>
     <svg class="px v2"><use href="#cat-face"/></svg>
-    <svg class="px v1"><use href="#cat-face"/></svg>
   </div>
-  🐾 мур · {{ db or '' }}
+  🐾 мур · {{ db or '' }} · Flask + psycopg + PostgreSQL
 </footer>
+
 <script>
   (function () {
     var btn = document.getElementById('themeToggle');

@@ -1,38 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ meta.title }}</h1>
-<p class="muted">Таблица <code>{{ meta.name }}</code> · страница {{ page }}</p>
-
-<div class="toolbar">
-  <a class="btn primary" href="{{ url_for('add_row', table=meta.name) }}">Добавить строку</a>
-  <form method="get" style="display:flex;gap:8px;align-items:center">
-    <input name="ids" placeholder="id через запятую: 1,2,3" value="{{ ids }}" style="width:220px">
-    <button class="btn" type="submit">Фильтр ANY(ids)</button>
-  </form>
-  {% if ids %}<a class="btn" href="{{ url_for('view_table', table=meta.name) }}">Сбросить</a>{% endif %}
+<div class="page-head">
+  <div>
+    <h1>{{ meta.title }} <span class="muted" style="font-size:15px;font-weight:500">/ {{ meta.name }}</span></h1>
+    <p class="sub">Страница {{ page }} · {{ meta.columns|length }} колонок</p>
+  </div>
+  <div class="actions" style="display:flex;gap:8px">
+    <a class="btn" href="{{ url_for('tables') }}">← К таблицам</a>
+    <a class="btn primary" href="{{ url_for('add_row', table=meta.name) }}">+ Добавить строку</a>
+  </div>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      {% for c in meta.columns %}<th>{{ c.column_name }}</th>{% endfor %}
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for row in rows %}
-    <tr>
-      {% for c in meta.columns %}<td>{{ row[loop.index0] }}</td>{% endfor %}
-      <td><a href="{{ url_for('edit_row', table=meta.name, row_id=row[0]) }}">Изменить</a></td>
-    </tr>
-    {% else %}
-    <tr><td colspan="{{ meta.columns|length + 1 }}" class="muted">Нет строк</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
-
 <div class="toolbar">
-  {% if page > 1 %}<a class="btn" href="{{ url_for('view_table', table=meta.name, page=page-1, ids=ids) }}">← Назад</a>{% endif %}
-  {% if has_next %}<a class="btn" href="{{ url_for('view_table', table=meta.name, page=page+1, ids=ids) }}">Вперёд →</a>{% endif %}
+  <form method="get" class="grow">
+    <input name="ids" placeholder="Фильтр по id: 1,2,3" value="{{ ids }}" style="max-width:280px">
+    <button class="btn sm" type="submit">Найти</button>
+    {% if ids %}<a class="btn sm ghost" href="{{ url_for('view_table', table=meta.name) }}">Сбросить</a>{% endif %}
+  </form>
+  <span class="muted" style="font-size:13px">группа значений уходит в <code>WHERE id = ANY(%s)</code></span>
+</div>
+
+<div class="tablewrap">
+  <table>
+    <thead>
+      <tr>
+        {% for c in meta.columns %}<th>{{ c.column_name }}</th>{% endfor %}
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        {% for c in meta.columns %}
+          <td class="{{ 'num' if c.data_type in ['integer','numeric','smallint','bigint'] }}">{{ row[loop.index0] }}</td>
+        {% endfor %}
+        <td style="text-align:right">
+          <a class="btn sm ghost" href="{{ url_for('edit_row', table=meta.name, row_id=row[0]) }}">Изменить</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="{{ meta.columns|length + 1 }}">
+          <div class="empty">
+            <svg class="px v3"><use href="#cat-sit"/></svg>
+            Пусто. Котик ничего не нашёл — попробуй другой фильтр или добавь строку.
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="pager">
+  {% if page > 1 %}<a class="btn sm" href="{{ url_for('view_table', table=meta.name, page=page-1, ids=ids) }}">← Назад</a>{% endif %}
+  {% if has_next %}<a class="btn sm" href="{{ url_for('view_table', table=meta.name, page=page+1, ids=ids) }}">Вперёд →</a>{% endif %}
 </div>
 {% endblock %}

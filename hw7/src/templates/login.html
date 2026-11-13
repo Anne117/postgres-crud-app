@@ -1,28 +1,44 @@
 {% extends "base.html" %}
-{% block title %}Вход{% endblock %}
+{% block title %}Вход · Склад{% endblock %}
 {% block content %}
-<div class="login card">
-  <div class="cat-strip v1" aria-hidden="true">
-    <svg class="px"><use href="#cat-sit"/></svg>
-    <svg class="px v2"><use href="#cat-walk"/></svg>
-    <svg class="px v3"><use href="#cat-face"/></svg>
-    <svg class="px v4"><use href="#cat-sit"/></svg>
-    <svg class="px v5"><use href="#cat-walk"/></svg>
-  </div>
-  <h1>Вход в приложение</h1>
-  <p class="muted">Учётные данные пользователя БД. База: <code>{{ db }}</code></p>
-  {% if error %}<div class="flash error">{{ error }}</div>{% endif %}
-  <form method="post">
-    <label for="user">Логин</label>
-    <input id="user" name="user" autocomplete="username" required autofocus value="{{ request.form.get('user','') }}">
-    <label for="password">Пароль</label>
-    <input id="password" name="password" type="password" autocomplete="current-password" required>
-    <div style="margin-top:18px">
-      <button class="btn primary" type="submit" style="width:100%">Войти</button>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-art">
+      <div>
+        <h2>Склад, который<br>мурчит 🐾</h2>
+        <p>Войди учётными данными пользователя БД — и правь товары, заказы и поставщиков.</p>
+      </div>
+      <div class="cat-stage" aria-hidden="true">
+        <svg class="px v2" style="left:0"><use href="#cat-sit"/></svg>
+        <svg class="px v1" style="left:84px"><use href="#cat-walk"/></svg>
+        <svg class="px v3" style="left:168px"><use href="#cat-face"/></svg>
+        <svg class="px v4" style="left:252px"><use href="#cat-sit"/></svg>
+      </div>
     </div>
-  </form>
-  <p class="muted" style="margin-top:14px;font-size:13px">
-    Неудачные попытки входа записываются в <code>logs/auth.log</code>.
-  </p>
+
+    <div class="login-form">
+      <h1>Вход</h1>
+      <p class="sub">База <code>{{ db }}</code></p>
+
+      {% if error %}<div class="flash error">⚠️ {{ error }}</div>{% endif %}
+
+      <form method="post">
+        <div class="field">
+          <label for="user">Логин</label>
+          <input id="user" name="user" autocomplete="username" required autofocus
+                 value="{{ request.form.get('user','') }}" placeholder="app_user">
+        </div>
+        <div class="field">
+          <label for="password">Пароль</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="••••••••">
+        </div>
+        <button class="btn primary" type="submit">Войти →</button>
+      </form>
+
+      <p class="muted" style="margin-top:18px;font-size:12.5px">
+        Неудачные попытки пишутся в <code>logs/auth.log</code>.
+      </p>
+    </div>
+  </div>
 </div>
 {% endblock %}

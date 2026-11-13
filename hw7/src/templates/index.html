@@ -1,28 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Мур! Главная 🐾</h1>
-<p class="muted">Пользователь БД: <code>{{ user }}</code> · база <code>{{ db }}</code></p>
+<div class="page-head">
+  <div>
+    <h1>Мур, <span class="accent">{{ user }}</span> 🐾</h1>
+    <p class="sub">База <code>{{ db }}</code> · четыре связанные таблицы · читай, добавляй, правь</p>
+  </div>
+  <a class="btn primary" href="{{ url_for('tables') }}">Все таблицы →</a>
+</div>
 
-<h2>Просмотр данных</h2>
 <div class="grid">
-  {% for t in ['supplier','product','order','order_item'] %}
+  {% for t in tables %}
   <div class="card">
-    <h3><svg class="px sm v{{ loop.index }}"><use href="#cat-face"/></svg>{{ {'supplier':'Поставщики','product':'Товары','order':'Заказы','order_item':'Позиции заказов'}[t] }}</h3>
-    <div class="muted"><code>{{ t }}</code></div>
-    <div class="links" style="margin-top:10px">
-      <a href="{{ url_for('view_table', table=t) }}">Открыть таблицу</a>
-      <a href="{{ url_for('add_row', table=t) }}">Добавить</a>
+    <div class="top">
+      <h3><svg class="px v{{ loop.index }}"><use href="#cat-face"/></svg>{{ titles[t] }}</h3>
+      <span class="btn ghost sm" style="pointer-events:none">🐾</span>
+    </div>
+    <div class="count">{{ counts[t] }}</div>
+    <div class="tname">{{ t }} · строк</div>
+    <div class="actions">
+      <a class="btn sm" href="{{ url_for('view_table', table=t) }}">Открыть</a>
+      <a class="btn sm ghost" href="{{ url_for('add_row', table=t) }}">+ Добавить</a>
     </div>
   </div>
   {% endfor %}
 </div>
 
-<h2>Изменение записей</h2>
+<h2><span class="dot"></span>Изменение записей</h2>
 <div class="card">
-  <p class="muted" style="margin-top:0">Выберите таблицу, затем строку для редактирования.</p>
-  <div class="links">
-    {% for t in ['supplier','product','order','order_item'] %}
-      <a href="{{ url_for('view_table', table=t) }}">{{ t }}</a>
+  <p class="muted" style="margin:0 0 14px">Выбери таблицу, найди строку и нажми «Изменить» — откроется форма с текущими значениями.</p>
+  <div class="actions" style="margin:0">
+    {% for t in tables %}
+      <a class="btn sm" href="{{ url_for('view_table', table=t) }}">🐱 {{ titles[t] }}</a>
     {% endfor %}
   </div>
 </div>

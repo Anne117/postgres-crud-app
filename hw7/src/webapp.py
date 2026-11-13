@@ -271,7 +271,16 @@ def logout():
 @login_required
 def index():
     data = current_session()
-    return render_template("index.html", user=data["user"], db=f"{DB_NAME}@{DB_HOST}:{DB_PORT}")
+    conn = get_conn()
+    g.conn = conn
+    counts = {}
+    with conn.cursor() as cur:
+        for t in TABLES:
+            cur.execute(sql.SQL("SELECT count(*) FROM {}").format(sql.Identifier(t)))
+            counts[t] = cur.fetchone()[0]
+    return render_template("index.html", user=data["user"],
+                           db=f"{DB_NAME}@{DB_HOST}:{DB_PORT}",
+                           counts=counts, titles=TABLE_TITLES, tables=TABLES)
 
 
 @app.route("/tables")
