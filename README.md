@@ -149,3 +149,15 @@ APP_LOG_FILE=/opt/app/logs/app.log
 | `app_user`: SELECT/INSERT/UPDATE | разрешены (запросы выполняются) |
 | `app_user`: DELETE / CREATE | отказано (нет прав) |
 | Таблицы после initdb | 4 таблицы, 3+6+3+5 = 17 строк |
+
+## Задание №7 — веб-интерфейс
+
+Веб-приложение над этой же БД: вход по логину/паролю пользователя БД, просмотр таблиц,
+добавление и обновление строк, журнал неудачных входов, Dockerfile.web и compose с PostgreSQL.
+
+Подробности и сценарий демонстрации: [`hw7/README.md`](hw7/README.md).
+
+```bash
+docker compose -f docker-compose.web.yml up -d --build
+# http://localhost:8081
+```

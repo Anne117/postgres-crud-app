@@ -1,0 +1,62 @@
+# =============================================================================
+#  Задание №7. Веб-приложение + PostgreSQL в одной сети Docker.
+#
+#  Запуск:
+#      docker compose -f docker-compose.web.yml up -d --build
+#      → http://localhost:8081
+#
+#  Вход: логин/пароль пользователя БД (app_user / user_secret из sql/01_schema.sql
+#  либо администратора app_admin / adminsecret — для проверки прав).
+# =============================================================================
+services:
+  db:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.db
+    image: postgres18_ru:latest
+    container_name: crud_web_db
+    restart: unless-stopped
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment:
+      POSTGRES_DB: appdb
+      POSTGRES_USER: app_admin
+      POSTGRES_PASSWORD: adminsecret
+      LANG: ru_RU.UTF-8
+      LC_ALL: ru_RU.UTF-8
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_web:/var/lib/postgresql
+      - ./docker/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/00_init.sql:ro
+      - ./sql/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./sql/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app_admin -d appdb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: crud-web:0.7.0
+    container_name: crud_web_app
+    restart: unless-stopped
+    env_file:
+      - ./web.env
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: appdb
+    ports:
+      - "8081:8000"
+    volumes:
+      - ./logs:/opt/app/logs
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata_web:

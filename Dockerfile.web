@@ -1,0 +1,38 @@
+# =============================================================================
+#  Задание №7: веб-приложение над БД «склад интернет-магазина».
+#  Сборка:   docker build -f Dockerfile.web -t crud-web:0.7.0 .
+#  Запуск:   docker compose -f docker-compose.web.yml up -d
+# =============================================================================
+FROM python:3.13-slim
+
+LABEL org.opencontainers.image.title="crud-web" \
+      org.opencontainers.image.description="ПЗ №7: веб-интерфейс к PostgreSQL (склад интернет-магазина)" \
+      org.opencontainers.image.version="0.7.0"
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    APP_AUTH_LOG=/opt/app/logs/auth.log \
+    APP_LOG_FILE=/opt/app/logs/webapp.log \
+    PORT=8000
+
+WORKDIR /opt/app
+
+# Зависимости приложения (интерпретатор + все библиотеки).
+COPY requirements-web.txt ./
+RUN pip install --no-cache-dir -r requirements-web.txt
+
+# Исходный код, шаблоны и конфиг-файл.
+COPY src/     ./src/
+COPY config/  ./config/
+
+# Непривилегированный пользователь и каталог журналов.
+RUN useradd --create-home --uid 10002 webuser \
+    && mkdir -p /opt/app/logs \
+    && chown -R webuser:webuser /opt/app
+USER webuser
+
+EXPOSE 8000
+
+# Автозапуск приложения при старте контейнера.
+CMD ["gunicorn", "--chdir", "src", "--workers", "1", "--bind", "0.0.0.0:8000", \
+     "--access-logfile", "-", "webapp:app"]
